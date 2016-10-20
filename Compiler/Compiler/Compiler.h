@@ -14,11 +14,15 @@ private:
 	CodeGenerator gen;
 	bool toLLVM;
 
+	//std::list<std::pair<std::string, TaggedLexeme>> getLexerOutput();
+
 public:
 	Compiler();
 	Compiler(bool toLLVM);
 	Compiler(std::string path);
 	~Compiler();
+
+	std::list<std::pair<std::string, TaggedLexeme>> getLexerOutput();
 
 	void parseFile(std::string path);
 	void toLLVMFlag(bool flag);

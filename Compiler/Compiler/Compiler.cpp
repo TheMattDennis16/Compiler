@@ -23,7 +23,12 @@ void Compiler::parseFile(std::string path)
 {
 	auto lines = FileHandling::getSource(path);
 	lex.tokenize(lines);
+	auto output = getLexerOutput();
+}
 
+std::list<std::pair<std::string, TaggedLexeme>> Compiler::getLexerOutput()
+{
+	return lex.getOutput();
 }
 
 void Compiler::toLLVMFlag(bool flag)

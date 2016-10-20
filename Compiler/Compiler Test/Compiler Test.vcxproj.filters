@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Error">
+      <UniqueIdentifier>{2700dac7-d234-4d26-9e7f-54436d58aa28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lexer">
+      <UniqueIdentifier>{3b92731b-154b-4b81-86c2-5f1cab28457e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lexer\DataTypes">
+      <UniqueIdentifier>{0ecc91fc-b599-462d-9ac0-20c49fa4b336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Error">
+      <UniqueIdentifier>{f1962dac-a1b6-4dc6-bc93-b8893db62752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{955a8be3-89d3-488b-be72-fd96478ba187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer\DataTypes">
+      <UniqueIdentifier>{4383b1e7-f288-4737-a739-71435e3ab626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Testing">
+      <UniqueIdentifier>{82391c6c-54ae-426a-979c-b4b57e63d203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Testing">
+      <UniqueIdentifier>{4a55eb35-b3e2-4f2a-b06a-c0c292dbf135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AST">
+      <UniqueIdentifier>{a3536a6c-cf71-4b17-ac4a-3b692341c57f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AST">
+      <UniqueIdentifier>{4ec21ba0-633e-4762-942e-eb166a727ebb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Compiler\Error.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\StringTagging.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Token.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\TokenCollection.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\DataTypes\Char.h">
+      <Filter>Header Files\Lexer\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\DataTypes\Type.h">
+      <Filter>Header Files\Lexer\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\CodeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\FileHandling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\LexicalAnalyser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\SyntaxAnalyser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestingTools.h">
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\ErrorCodes.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\StaticErrors.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Comparison.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Function.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Node.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\RootNode.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\SymbolTable.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Compiler\TokenTypes.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Error.cpp">
+      <Filter>Source Files\Error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\StringTagging.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Token.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\TokenCollection.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\DataTypes\Char.cpp">
+      <Filter>Source Files\Lexer\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\FileHandling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestingTools.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Node.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\RootNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Function.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

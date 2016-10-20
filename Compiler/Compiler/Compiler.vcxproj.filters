@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Lexer\DataTypes">
       <UniqueIdentifier>{595c95e2-18e9-459b-8693-df948523cb72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\AST">
+      <UniqueIdentifier>{baa70c47-df28-426c-a22b-36fb4b1e07de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AST">
+      <UniqueIdentifier>{22dec41a-e564-48fe-ac70-d9ed71a47fda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +68,18 @@
     </ClCompile>
     <ClCompile Include="DataTypes\Char.cpp">
       <Filter>Source Files\Lexer\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="SyntaxAnalyser.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="RootNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
+      <Filter>Source Files\AST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +115,24 @@
     </ClInclude>
     <ClInclude Include="DataTypes\Char.h">
       <Filter>Header Files\Lexer\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="RootNode.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Comparison.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorCodes.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable.h">
+      <Filter>Header Files\AST</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

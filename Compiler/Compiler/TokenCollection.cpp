@@ -17,8 +17,12 @@ TokenCollection::TokenCollection()
 	collection.insert({ std::string("for"), Token(TokenTypes::KEYWORD, "for") });
 	collection.insert({ std::string("else"), Token(TokenTypes::KEYWORD, "else") });
 	collection.insert({ std::string("return"), Token(TokenTypes::KEYWORD, "return") });
+	collection.insert({ std::string("true"), Token(TokenTypes::VAR_VALUE, "true") });
+	collection.insert({ std::string("false"), Token(TokenTypes::VAR_VALUE, "false") });
 	
 	//Basic operators (no modulo)
+	collection.insert({ std::string("++"), Token(TokenTypes::OPERATOR, "++") });//
+	collection.insert({ std::string("--"), Token(TokenTypes::OPERATOR, "--") });//
 	collection.insert({ std::string("="), Token(TokenTypes::OPERATOR, "=") }); //
 	collection.insert({ std::string("=="), Token(TokenTypes::OPERATOR, "==") });//
 	collection.insert({ std::string("!="), Token(TokenTypes::OPERATOR, "!=") });//
@@ -48,6 +52,7 @@ TokenCollection::TokenCollection()
 	collection.insert({ std::string("{"), Token(TokenTypes::SYMBOL, "{") });
 	collection.insert({ std::string("}"), Token(TokenTypes::SYMBOL, "}") });
 	collection.insert({ std::string(";"), Token(TokenTypes::SYMBOL, ";") });
+	collection.insert({ std::string(","), Token(TokenTypes::SYMBOL, ",") });
 	collection.insert({ std::string("\""), Token(TokenTypes::SYMBOL, "\"") });
 	collection.insert({ std::string("\'"), Token(TokenTypes::SYMBOL, "\'") });
 }

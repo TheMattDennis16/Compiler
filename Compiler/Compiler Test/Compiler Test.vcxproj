@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3EF500F5-9398-4C73-9E66-51400A5BDD35}</ProjectGuid>
-    <RootNamespace>Compiler</RootNamespace>
+    <ProjectGuid>{A96C28C0-B2F9-4B2B-877E-AE7DDCB5F9E2}</ProjectGuid>
+    <RootNamespace>CompilerTest</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <AdditionalIncludeDirectories>C:\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -85,6 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -119,45 +120,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DataTypes\Char.cpp" />
-    <ClInclude Include="Comparison.h" />
-    <ClInclude Include="DataTypes\Char.h">
+    <ClCompile Include="..\Compiler\Compiler.cpp" />
+    <ClCompile Include="..\Compiler\DataTypes\Char.cpp" />
+    <ClCompile Include="..\Compiler\Error.cpp" />
+    <ClCompile Include="..\Compiler\FileHandling.cpp" />
+    <ClCompile Include="..\Compiler\Function.cpp" />
+    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp" />
+    <ClCompile Include="..\Compiler\Node.cpp" />
+    <ClCompile Include="..\Compiler\RootNode.cpp" />
+    <ClCompile Include="..\Compiler\StringTagging.cpp" />
+    <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp" />
+    <ClCompile Include="..\Compiler\Token.cpp" />
+    <ClCompile Include="..\Compiler\TokenCollection.cpp" />
+    <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="TestingTools.cpp" />
+    <ClInclude Include="..\Compiler\CodeGenerator.h" />
+    <ClInclude Include="..\Compiler\Comparison.h" />
+    <ClInclude Include="..\Compiler\Compiler.h" />
+    <ClInclude Include="..\Compiler\DataTypes\Char.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
-    <ClCompile Include="Compiler.cpp" />
-    <ClCompile Include="Error.cpp" />
-    <ClCompile Include="FileHandling.cpp" />
-    <ClCompile Include="Function.cpp" />
-    <ClCompile Include="LexicalAnalyser.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="RootNode.cpp" />
-    <ClCompile Include="StringTagging.cpp" />
-    <ClInclude Include="ErrorCodes.h" />
-    <ClInclude Include="Function.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="RootNode.h" />
-    <ClInclude Include="StringTagging.h">
-      <FileType>CppHeader</FileType>
-    </ClInclude>
-    <ClCompile Include="SyntaxAnalyser.cpp" />
-    <ClCompile Include="Token.cpp" />
-    <ClCompile Include="TokenCollection.cpp" />
-    <ClCompile Include="TokenTypes.h">
+    <ClInclude Include="..\Compiler\DataTypes\Type.h" />
+    <ClInclude Include="..\Compiler\Error.h" />
+    <ClCompile Include="..\Compiler\TokenTypes.h">
       <FileType>CppHeader</FileType>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CodeGenerator.h" />
-    <ClInclude Include="Compiler.h" />
-    <ClInclude Include="DataTypes\Type.h" />
-    <ClInclude Include="Error.h" />
-    <ClInclude Include="FileHandling.h" />
-    <ClInclude Include="LexicalAnalyser.h" />
-    <ClInclude Include="SymbolTable.h" />
-    <ClInclude Include="SyntaxAnalyser.h" />
-    <ClInclude Include="Token.h" />
-    <ClInclude Include="TokenCollection.h" />
+    <ClInclude Include="..\Compiler\ErrorCodes.h" />
+    <ClInclude Include="..\Compiler\FileHandling.h" />
+    <ClInclude Include="..\Compiler\Function.h" />
+    <ClInclude Include="..\Compiler\LexicalAnalyser.h" />
+    <ClInclude Include="..\Compiler\Node.h" />
+    <ClInclude Include="..\Compiler\RootNode.h" />
+    <ClInclude Include="..\Compiler\StaticErrors.h" />
+    <ClInclude Include="..\Compiler\StringTagging.h">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\SymbolTable.h" />
+    <ClInclude Include="..\Compiler\SyntaxAnalyser.h" />
+    <ClInclude Include="..\Compiler\Token.h" />
+    <ClInclude Include="..\Compiler\TokenCollection.h" />
+    <ClInclude Include="TestingTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

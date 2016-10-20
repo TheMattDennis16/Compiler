@@ -1,0 +1,15 @@
+int doMath(double a, double b)
+{
+	char[] veryLongName = "Testing";
+
+
+	for(int i = 0; i < 5; i++){}
+	int result = 2 * (b+3);
+	double retVal = 0;
+	if (result == 15)
+		retVal = result;
+	else {
+		retVal = 1000;
+	}
+	return retVal;
+}

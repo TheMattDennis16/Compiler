@@ -13,10 +13,10 @@ public:
 
 enum TypeID
 {
-	CHAR,
-	INT,
-	DOUBLE,
-	BOOL
+	NEW_CHAR,
+	NEW_INT,
+	NEW_DOUBLE,
+	NEW_BOOL
 };
 
 #endif
