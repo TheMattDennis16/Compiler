@@ -119,7 +119,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Class.cpp" />
     <ClCompile Include="DataTypes\Char.cpp" />
+    <ClCompile Include="DataTypes\Void.cpp" />
+    <ClCompile Include="If.cpp" />
+    <ClCompile Include="Symbol.cpp" />
+    <ClCompile Include="Validator.cpp" />
+    <ClInclude Include="Assignment.h" />
+    <ClInclude Include="Break.h" />
+    <ClInclude Include="Continue.h" />
+    <ClInclude Include="Expr.h" />
+    <ClInclude Include="For.h" />
+    <ClInclude Include="If.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="TypeParsing.h" />
+    <ClInclude Include="DataTypes\Void.h">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Class.h" />
     <ClInclude Include="Comparison.h" />
     <ClInclude Include="DataTypes\Char.h">
       <FileType>CppHeader</FileType>
@@ -140,12 +159,14 @@
     <ClInclude Include="StringTagging.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
-    <ClCompile Include="SyntaxAnalyser.cpp" />
+    <ClCompile Include="SymbolTable.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="TokenCollection.cpp" />
     <ClCompile Include="TokenTypes.h">
       <FileType>CppHeader</FileType>
     </ClCompile>
+    <ClInclude Include="Validator.h" />
+    <ClInclude Include="While.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CodeGenerator.h" />
@@ -155,7 +176,6 @@
     <ClInclude Include="FileHandling.h" />
     <ClInclude Include="LexicalAnalyser.h" />
     <ClInclude Include="SymbolTable.h" />
-    <ClInclude Include="SyntaxAnalyser.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenCollection.h" />
   </ItemGroup>

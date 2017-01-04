@@ -10,7 +10,7 @@
 class TokenCollection
 {
 private:
-	std::unordered_map<std::string, Token> collection;
+	std::unordered_map<std::string, Token> _collection;
 public:
 	TokenCollection();
 	Token isToken(std::string strToken);

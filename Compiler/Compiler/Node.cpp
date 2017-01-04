@@ -1,8 +1,5 @@
 #include "Node.h"
 
-Node::Node(Node* parentPtr, int tokenType, int line)
+Node::Node(NodeDetails details) : _details(details)
 {
-	_parent = parentPtr;
-	_tokenType = tokenType;
-	_line = line;
 }

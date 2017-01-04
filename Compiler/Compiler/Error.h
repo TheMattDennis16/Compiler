@@ -2,6 +2,8 @@
 #define ERROR_HH
 #define ERROR __LINE__, __FILE__
 
+#include "ErrorCodes.h"
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -38,5 +40,47 @@ class OutOfBounds : Fatal
 private:
 public:
 	OutOfBounds(const int line, const char* file);
+};
+
+class NotValidWord : Fatal
+{
+private:
+public:
+	NotValidWord(const int line, const char* file, std::string word);
+};
+
+class InvalidClassBraces : Fatal
+{
+private:
+public:
+	InvalidClassBraces(const int line, const char* file);
+};
+
+class ImbalancedBraces : Fatal
+{
+private:
+public:
+	ImbalancedBraces(const int line, const char* file);
+};
+
+class UnexpectedSymbol : Warning
+{
+private:
+public:
+	UnexpectedSymbol(const int line, const char* file, char symbol);
+};
+
+class UnexpectedToken : Fatal
+{
+private:
+public:
+	UnexpectedToken(const int line, const char* file, std::string token);
+};
+
+class IdentifierAlreadyInUseInScope : Fatal
+{
+private:
+public:
+	IdentifierAlreadyInUseInScope(const int line, const char* file, std::string identifier);
 };
 #endif

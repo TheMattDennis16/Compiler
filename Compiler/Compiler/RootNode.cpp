@@ -1,17 +1,17 @@
 #include "RootNode.h"
 
-void RootNode::addFunction(std::string fNameWithScope, Function* function)
+void RootNode::addClass(std::string className, Class* classPtr)
 {
-	if (getFunctionSignature(fNameWithScope) == nullptr)
+	if (getClass(className) == nullptr)
 	{
-		std::cerr << ErrorCodes::FUNCTION_NAME_DEFINED_IN_SCOPE << std::endl;
+		std::cerr << ErrorCodes::CLASS_NAME_DEFINED_IN_SCOPE << std::endl;
 	}
-	else _functions.insert(std::pair<std::string, Function*>(function->getName(), function));
+	else _classes.insert(std::pair<std::string, Class*>(classPtr->getName(), classPtr));
 }
 
-Function* RootNode::getFunctionSignature(std::string functionWithScope)
+Class* RootNode::getClass(std::string className)
 {
-	if (_functions.find(functionWithScope) == _functions.end())
+	if (_classes.find(className) == _classes.end())
 		return nullptr;
-	return _functions.at(functionWithScope);
+	return _classes.at(className);
 }

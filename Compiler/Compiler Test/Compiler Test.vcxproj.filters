@@ -9,42 +9,113 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Error">
-      <UniqueIdentifier>{2700dac7-d234-4d26-9e7f-54436d58aa28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Lexer">
-      <UniqueIdentifier>{3b92731b-154b-4b81-86c2-5f1cab28457e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Lexer\DataTypes">
-      <UniqueIdentifier>{0ecc91fc-b599-462d-9ac0-20c49fa4b336}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Error">
-      <UniqueIdentifier>{f1962dac-a1b6-4dc6-bc93-b8893db62752}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lexer">
-      <UniqueIdentifier>{955a8be3-89d3-488b-be72-fd96478ba187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lexer\DataTypes">
-      <UniqueIdentifier>{4383b1e7-f288-4737-a739-71435e3ab626}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Testing">
-      <UniqueIdentifier>{82391c6c-54ae-426a-979c-b4b57e63d203}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{4a55eb35-b3e2-4f2a-b06a-c0c292dbf135}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\AST">
-      <UniqueIdentifier>{a3536a6c-cf71-4b17-ac4a-3b692341c57f}</UniqueIdentifier>
+      <UniqueIdentifier>{523e7d3b-628c-4523-ae3d-82f84d7867c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Error">
+      <UniqueIdentifier>{7c31b4ed-a69e-4128-a090-bdc6f2fbe442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{9e7f755d-8b64-4a3b-badb-ca03d0caec71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer\DataTypes">
+      <UniqueIdentifier>{1228fdb2-0a19-4ced-8b47-f447cc4ee6e9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\AST">
-      <UniqueIdentifier>{4ec21ba0-633e-4762-942e-eb166a727ebb}</UniqueIdentifier>
+      <UniqueIdentifier>{cdae9694-23cd-4a2e-9be2-56b26247ab86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Error">
+      <UniqueIdentifier>{8ed82635-6abf-4bb7-82e3-8ae56830693b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lexer">
+      <UniqueIdentifier>{8ba1cf1d-73e5-4b48-a020-237db60ae5da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lexer\DataTypes">
+      <UniqueIdentifier>{5eb6da52-477c-4202-b8b1-37b77ec484e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestingTools.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Function.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Node.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\RootNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\SymbolTable.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Class.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Error.cpp">
+      <Filter>Source Files\Error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\StringTagging.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Token.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\TokenCollection.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\DataTypes\Char.cpp">
+      <Filter>Source Files\Lexer\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\Compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\FileHandling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Compiler\TokenTypes.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Compiler\Comparison.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Function.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Node.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\RootNode.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\SymbolTable.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Class.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\ErrorCodes.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
     <ClInclude Include="..\Compiler\Error.h">
       <Filter>Header Files\Error</Filter>
     </ClInclude>
@@ -78,76 +149,5 @@
     <ClInclude Include="..\Compiler\SyntaxAnalyser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestingTools.h">
-      <Filter>Header Files\Testing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\ErrorCodes.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\StaticErrors.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Comparison.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Function.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Node.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\RootNode.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\SymbolTable.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Compiler\TokenTypes.h">
-      <Filter>Header Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Error.cpp">
-      <Filter>Source Files\Error</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\StringTagging.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Token.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\TokenCollection.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\DataTypes\Char.cpp">
-      <Filter>Source Files\Lexer\DataTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Compiler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\FileHandling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Lexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestingTools.cpp">
-      <Filter>Source Files\Testing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Node.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\RootNode.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Function.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Compiler\Class.cpp" />
     <ClCompile Include="..\Compiler\Compiler.cpp" />
     <ClCompile Include="..\Compiler\DataTypes\Char.cpp" />
     <ClCompile Include="..\Compiler\Error.cpp" />
@@ -129,11 +130,15 @@
     <ClCompile Include="..\Compiler\Node.cpp" />
     <ClCompile Include="..\Compiler\RootNode.cpp" />
     <ClCompile Include="..\Compiler\StringTagging.cpp" />
+    <ClCompile Include="..\Compiler\SymbolTable.cpp" />
     <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp" />
     <ClCompile Include="..\Compiler\Token.cpp" />
     <ClCompile Include="..\Compiler\TokenCollection.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="TestingTools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Compiler\Class.h" />
     <ClInclude Include="..\Compiler\CodeGenerator.h" />
     <ClInclude Include="..\Compiler\Comparison.h" />
     <ClInclude Include="..\Compiler\Compiler.h" />
@@ -142,24 +147,22 @@
     </ClInclude>
     <ClInclude Include="..\Compiler\DataTypes\Type.h" />
     <ClInclude Include="..\Compiler\Error.h" />
-    <ClCompile Include="..\Compiler\TokenTypes.h">
-      <FileType>CppHeader</FileType>
-    </ClCompile>
     <ClInclude Include="..\Compiler\ErrorCodes.h" />
     <ClInclude Include="..\Compiler\FileHandling.h" />
     <ClInclude Include="..\Compiler\Function.h" />
     <ClInclude Include="..\Compiler\LexicalAnalyser.h" />
     <ClInclude Include="..\Compiler\Node.h" />
     <ClInclude Include="..\Compiler\RootNode.h" />
-    <ClInclude Include="..\Compiler\StaticErrors.h" />
     <ClInclude Include="..\Compiler\StringTagging.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
     <ClInclude Include="..\Compiler\SymbolTable.h" />
+    <ClCompile Include="..\Compiler\TokenTypes.h">
+      <FileType>CppHeader</FileType>
+    </ClCompile>
     <ClInclude Include="..\Compiler\SyntaxAnalyser.h" />
     <ClInclude Include="..\Compiler\Token.h" />
     <ClInclude Include="..\Compiler\TokenCollection.h" />
-    <ClInclude Include="TestingTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

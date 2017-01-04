@@ -2,134 +2,145 @@
 
 LexicalAnalyser::LexicalAnalyser()
 {
-	linesIt = lines.begin();
+	_linesIt = _lines.begin();
 }
 
 //Rather than append to a previous stored set of chars, forward iterate till a token or terminal symbol is identified
 void LexicalAnalyser::tokenize(std::list<std::string>& list)
 {
 	//Set up ""globals"" for processing
-	lines = list;
-	linesIt = lines.begin();
-	nextChar = (*lines.begin()).at(0);
+	_lines = list;
+	_linesIt = _lines.begin();
+	_nextChar = (*_lines.begin()).at(0);
 	bool isTokenised = false;
-	while (!isFinished)
+	while (!_isFinished)
 	{	
-		getNextChar();
-		if (previousChar == '\n' || previousChar == '\r')
+		if(!_toSkip) getNextChar();
+		if (_previousChar == '\n' || _previousChar == '\r')
 		{
-			if ((*linesIt).size() == 0 && linesIt != lines.end())
+			if ((*_linesIt).size() == 0 && _linesIt != _lines.end())
 			{
 				_advanceLinePosition(isTokenised);
 			}
 			continue;
 		}
-		if (previousChar == ' ' || previousChar == '\t') 
+		if (_previousChar == ' ' || _previousChar == '\t') 
 			continue;
 
 		//Operator symbol checking
-		if (previousChar == '&')
+		if (_previousChar == '&')
 		{
-			if (nextChar == '&') { addToOutput(Token(TokenTypes::OPERATOR, "&&")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::UNEXPECTED, "&"));
+			if (_nextChar == '&') { _addToOutput(Token(TokenTypes::OPERATOR, "&&")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::UNEXPECTED, "&"));
 		}
-		else if (previousChar == '!')
+		else if (_previousChar == '!')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "!=")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "!")); 
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "!=")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "!")); 
 		}
-		else if (previousChar == '\\')
+		else if (_previousChar == '/')
 		{
-			if (nextChar == '\\') { _advanceLinePosition(isTokenised); }
-			else if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "\=")); getNextChar(); }
-			else { addToOutput(Token(TokenTypes::OPERATOR, "\\")); getNextChar(); }
+			if (_nextChar == '/')
+			{
+				_advanceLinePosition(isTokenised);
+				if (isTokenised) break;
+				_getNextCharNewLine();
+				continue;
+			}
+			else if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "/=")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "/"));
 		}
-		else if (previousChar == '*')
+		else if (_previousChar == '\\')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "*=")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "*"));
+			 if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "\=")); getNextChar(); }
+			else { _addToOutput(Token(TokenTypes::OPERATOR, "\\")); getNextChar(); }
 		}
-		else if (previousChar == '+')
+		else if (_previousChar == '*')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "+=")); getNextChar(); }
-			else if (nextChar == '+') { addToOutput(Token(TokenTypes::OPERATOR, "++")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "+"));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "*=")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "*"));
 		}
-		else if (previousChar == '-')
+		else if (_previousChar == '+')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "-=")); getNextChar(); }
-			else if (nextChar == '-') { addToOutput(Token(TokenTypes::OPERATOR, "--")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "-"));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "+=")); getNextChar(); }
+			else if (_nextChar == '+') { _addToOutput(Token(TokenTypes::OPERATOR, "++")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "+"));
 		}
-		else if (previousChar == '=')
+		else if (_previousChar == '-')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "==")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "="));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "-=")); getNextChar(); }
+			else if (_nextChar == '-') { _addToOutput(Token(TokenTypes::OPERATOR, "--")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "-"));
 		}
-		else if (previousChar == '>')
+		else if (_previousChar == '=')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, ">=")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, ">"));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "==")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "="));
 		}
-		else if (previousChar == '<')
+		else if (_previousChar == '>')
 		{
-			if (nextChar == '=') { addToOutput(Token(TokenTypes::OPERATOR, "<=")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::OPERATOR, "<"));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, ">=")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, ">"));
 		}
-		else if (previousChar == '|')
+		else if (_previousChar == '<')
 		{
-			if (nextChar == '|') { addToOutput(Token(TokenTypes::OPERATOR, "||")); getNextChar(); }
-			else addToOutput(Token(TokenTypes::UNEXPECTED, "|"));
+			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "<=")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::OPERATOR, "<"));
 		}
-		else if (previousChar == '[')
-			addToOutput(Token(TokenTypes::OPERATOR, "["));
-		else if (previousChar == ']')
-			addToOutput(Token(TokenTypes::OPERATOR, "]"));
-		else if (previousChar == '(')
-			addToOutput(Token(TokenTypes::SYMBOL, "("));
-		else if (previousChar == ')')
-			addToOutput(Token(TokenTypes::SYMBOL, ")"));
-		else if (previousChar == '{')
-			addToOutput(Token(TokenTypes::SYMBOL, "{"));
-		else if (previousChar == '}')
-			addToOutput(Token(TokenTypes::SYMBOL, "}"));
-		else if (previousChar == ';')
-			addToOutput(Token(TokenTypes::SYMBOL, ";"));
-		else if (previousChar == ',')
-			addToOutput(Token(TokenTypes::SYMBOL, ","));
+		else if (_previousChar == '|')
+		{
+			if (_nextChar == '|') { _addToOutput(Token(TokenTypes::OPERATOR, "||")); getNextChar(); }
+			else _addToOutput(Token(TokenTypes::UNEXPECTED, "|"));
+		}
+		else if (_previousChar == '[')
+			_addToOutput(Token(TokenTypes::OPERATOR, "["));
+		else if (_previousChar == ']')
+			_addToOutput(Token(TokenTypes::OPERATOR, "]"));
+		else if (_previousChar == '(')
+			_addToOutput(Token(TokenTypes::SYMBOL, "("));
+		else if (_previousChar == ')')
+			_addToOutput(Token(TokenTypes::SYMBOL, ")"));
+		else if (_previousChar == '{')
+			_addToOutput(Token(TokenTypes::SYMBOL, "{"));
+		else if (_previousChar == '}')
+			_addToOutput(Token(TokenTypes::SYMBOL, "}"));
+		else if (_previousChar == ';')
+			_addToOutput(Token(TokenTypes::SYMBOL, ";"));
+		else if (_previousChar == ',')
+			_addToOutput(Token(TokenTypes::SYMBOL, ","));
 
 		//Not operator, must be: Identifier, Type, String Literal or a Number.
-		if (taggerTools.isChar(previousChar) || previousChar == '\"' || previousChar == '\'')
+		if (_taggerTools.isChar(_previousChar) || _previousChar == '\"' || _previousChar == '\'' || _previousChar == '_')
 		{
 			bool isStringLiteralOpen = false;
 			bool isCharOpen = false;
 			bool isLocFinished = false;
 			std::string word = "";
 
-			if (previousChar != '\"' && previousChar != '\'')
-				word += previousChar;
-			else if (previousChar == '\"')
+			if (_previousChar != '\"' && _previousChar != '\'')
+				word += _previousChar;
+			else if (_previousChar == '\"')
 			{
-				addToOutput(Token(TokenTypes::SYMBOL, "\""));
+				_addToOutput(Token(TokenTypes::SYMBOL, "\""));
 				isStringLiteralOpen = true;
 			}
 			else 
 			{
-				addToOutput(Token(TokenTypes::SYMBOL, "\'"));
+				_addToOutput(Token(TokenTypes::SYMBOL, "\'"));
 				isCharOpen = true;
 			}
 
 			while (!isLocFinished)
 			{
 				//Parse out string literal open/closers.
-				if (nextChar == '\"')
+				if (_nextChar == '\"')
 				{
 					if (!isCharOpen)
 					{
 						if (isStringLiteralOpen)
 						{
-							addToOutput(Token(TokenTypes::VAR_VALUE, word));
-							addToOutput(Token(TokenTypes::SYMBOL, "\""));
+							_addToOutput(Token(TokenTypes::VAR_VALUE, word));
+							_addToOutput(Token(TokenTypes::SYMBOL, "\""));
 							isLocFinished = true;
 							getNextChar();
 						}
@@ -140,14 +151,14 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 						getNextChar();
 					}
 				}
-				else if (nextChar == '\'')
+				else if (_nextChar == '\'')
 				{
 					if (!isStringLiteralOpen)
 					{
 						if (isCharOpen)
 						{
-							addToOutput(Token(TokenTypes::VAR_VALUE, word));
-							addToOutput(Token(TokenTypes::SYMBOL, "\'"));
+							_addToOutput(Token(TokenTypes::VAR_VALUE, word));
+							_addToOutput(Token(TokenTypes::SYMBOL, "\'"));
 							isLocFinished = true;
 							getNextChar();
 						}
@@ -163,32 +174,32 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 					//check if a string literal is open, if it is add literally everything to output until an end symbol is found.
 					if (isStringLiteralOpen || isCharOpen)
 					{
-						word += nextChar;
+						word += _nextChar;
 						getNextChar();
 					}
 					else
 					{
-						if (tokenCollection.isStringBreakingChar(nextChar))
+						if (_tokenCollection.isStringBreakingChar(_nextChar))
 						{
 							StringTagging::removeWhitespace(word);
-							Token search = tokenCollection.isToken(word);
-							Token charSearch = tokenCollection.isToken(std::string("") + nextChar);
+							Token search = _tokenCollection.isToken(word);
+							Token charSearch = _tokenCollection.isToken(std::string("") + _nextChar);
 
 							//Check to see if the word we've built is an actual type name, if not then it IS an identifier.
 							if (search.tokenType == TokenTypes::TYPE)
 							{
-								addToOutput(search);
+								_addToOutput(search);
 							}
 							else
 							{
-								addToOutput(Token(TokenTypes::IDENTIFIER, word));
+								_addToOutput(Token(TokenTypes::IDENTIFIER, word));
 							}
 
 							
-							//Check to see if our nextChar is actually a real token, if it isnt then its whitespace and who cares
+							//Check to see if our _nextChar is actually a real token, if it isnt then its whitespace and who cares
 							if (charSearch.tokenValue == ";")
 							{
-								addToOutput(charSearch); getNextChar();
+								_addToOutput(charSearch); getNextChar();
 							}
 							isLocFinished = true;
 							//getNextChar();
@@ -196,21 +207,21 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 						}
 						else
 						{
-							word += nextChar;
+							word += _nextChar;
 							getNextChar();
 						}
 					}
 				}
 			}
 		}
-		else if (taggerTools.isNum(previousChar))
+		else if (_taggerTools.isNum(_previousChar))
 		{
 			//Include any '.'s found, for doubles etc.
 			std::string number = "";
-			while (taggerTools.isNum(previousChar) || previousChar == '.')
+			while (_taggerTools.isNum(_previousChar) || _previousChar == '.')
 			{
-				number += previousChar;
-				if (taggerTools.isNum(nextChar) || nextChar == '.')
+				number += _previousChar;
+				if (_taggerTools.isNum(_nextChar) || _nextChar == '.')
 					getNextChar();
 				else break;
 			}
@@ -218,12 +229,12 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 			if (number.at(0) == '.')
 				number = '0' + number.data();
 
-			addToOutput(Token(TokenTypes::VAR_VALUE, number));
+			_addToOutput(Token(TokenTypes::VAR_VALUE, number));
 
-			Token charSearch = tokenCollection.isToken(std::string("") + previousChar);
+			Token charSearch = _tokenCollection.isToken(std::string("") + _previousChar);
 			if (charSearch.tokenValue == ";")
 			{
-				addToOutput(charSearch);
+				_addToOutput(charSearch);
 			}
 		}
 	}
@@ -236,43 +247,68 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 */
 bool LexicalAnalyser::getNextChar()
 {
-	//Update to new position if needed.
+	if (_toSkip) _toSkip = false;
+
 	bool isFinishedNextLine = false;
 	while (!isFinishedNextLine)
 	{
 		isFinishedNextLine = _getNextChar();
-		if (isFinished)
+		if (_isFinished)
 			return false;
 	}
 }
 
-bool LexicalAnalyser::_getNextChar()
+bool LexicalAnalyser::_getNextCharNewLine()
 {
-	if (++iPosition >= (*linesIt).size())
+	if (_isFinished) return false;
+	if (++_iPosition >= (*_linesIt).size())
 	{
 		bool hasHitEnd = false;
 		_advanceLinePosition(hasHitEnd);
 
 		if (hasHitEnd)
 		{
-			previousChar = nextChar;
-			isFinished = true;
+			_previousChar = _nextChar;
+			_isFinished = true;
 			return true;
 		}
 	}
-	previousChar = nextChar;
-	if ((*linesIt).size() == 0)
-		(*linesIt) += '\n';
-	nextChar = (*linesIt).at(iPosition);
+	if ((*_linesIt).size() <= 0)
+		(*_linesIt) += '\n\n';
+	_previousChar = (*_linesIt).at(0);
+	_nextChar = (*_linesIt).at(1);
+	_toSkip = true;
+	return true;
+}
+
+bool LexicalAnalyser::_getNextChar()
+{
+	if (_isFinished) return false;
+	if (++_iPosition >= (*_linesIt).size())
+	{
+		bool hasHitEnd = false;
+		_advanceLinePosition(hasHitEnd);
+
+		if (hasHitEnd)
+		{
+			_previousChar = _nextChar;
+			_isFinished = true;
+			return true;
+		}
+	}
+	_previousChar = _nextChar;
+	if ((*_linesIt).size() == 0)
+		(*_linesIt) += '\n';
+	_nextChar = (*_linesIt).at(_iPosition);
 	return true;
 }
 
 void LexicalAnalyser::_advanceLinePosition(bool& hasHitEnd)
 {
-	if (++linesIt == lines.end())
+	if (++_linesIt == _lines.end())
 		hasHitEnd = true;
-	iLine++;
-	iPosition = 0;
+	_iLine++;
+	_iPosition = 0;
 }
 
 TaggedLexeme::TaggedLexeme(Token& t, int l)
@@ -281,12 +317,12 @@ TaggedLexeme::TaggedLexeme(Token& t, int l)
 	line = l;
 }
 
-void LexicalAnalyser::addToOutput(Token& token)
+void LexicalAnalyser::_addToOutput(Token& token)
 {
-	output.push_back(std::pair<std::string, TaggedLexeme>(token.tokenValue, TaggedLexeme(token, iLine)));
+	_output.push_back(std::pair<std::string, TaggedLexeme>(token.tokenValue, TaggedLexeme(token, _iLine)));
 }
 
 std::list<std::pair<std::string, TaggedLexeme>> LexicalAnalyser::getOutput()
 {
-	return output;
+	return _output;
 }

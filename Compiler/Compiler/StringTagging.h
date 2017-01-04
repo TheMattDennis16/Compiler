@@ -7,6 +7,7 @@
 // TODO: Rename to something that's actually correct
 class StringTagging
 {
+private:
 public:
 	bool isChar(char val);
 	bool isNum(char val);

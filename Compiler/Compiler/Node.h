@@ -7,22 +7,27 @@
 
 #include "TokenTypes.h"
 
-
 class Node
 {
 private:
+	NodeDetails _details;
+	virtual void stub();
+
+public:
+	Node(NodeDetails details);
+};
+
+class NodeDetails
+{
+private:
+public:
 	Node* _parent;
 	int _line;
 	int _tokenType;
-public:
-	Node(Node* parentPtr, int tokenType, int line);
-	template <class T> void Throw(std::string err, T symbol);
+	NodeDetails(Node* parentPtr, int tokenType, int line) : _parent(parentPtr), _tokenType(tokenType), _line(line)
+	{
+	}
 };
 
-template <class T>
-inline void Node::Throw(std::string err, T symbol)
-{
-	std::cout << err << ". Near symbol '" << symbol << "' on line " << _line << std::endl;
-}
 
 #endif

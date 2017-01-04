@@ -10,9 +10,9 @@ public:
 	int tokenType;
 	std::string tokenValue;
 
-
 	Token(int type, std::string val);
 	Token() { tokenType = 100; tokenValue = ""; }
+	bool operator==(const Token& rhs);
 };
 
 #endif

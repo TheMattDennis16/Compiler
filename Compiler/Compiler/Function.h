@@ -5,39 +5,57 @@
 #include <list>
 
 #include "DataTypes\Type.h"
+#include "Block.h"
 #include "Node.h"
-#include "DataTypes\Type.h"
 
 class FunctionParameter
 {
-	//Defer template type definition to ensure runtime behaviour.
+private:
 public:
-	Type _type;
+	Type* _type;
 	std::string _name;
-	
-	FunctionParameter(Type type, std::string name)
+
+	FunctionParameter(Type* type, std::string name)
 	{
 		_type = type;
 		_name = name;
 	}
 };
 
-class Function : Node
+class FunctionParameterValue
 {
 private:
-	Node* _parent;
+public:
+	Type* _type;
+
+	FunctionParameterValue(Type* type)
+	{
+		_type = type;
+	}
+};
+
+class Function : public Node
+{
+private:
+	Block* _block;
 	std::list<FunctionParameter> _params;
-	std::list<Node*> _startNodes;
-	std::string _nameIncludingScope;
-	int _line;
+	std::string _name;
 
 public:
-	std::string getName();
+	//Class level functions
 	Function(
 		std::list<FunctionParameter>& params, 
-		int line,
-		std::string name
+		std::string name,
+		NodeDetails details
 		);
+	~Function();
+	bool operator==(const Function& rhs);
+
+	std::string getName();
+	void addParameter(FunctionParameter& param);
+	std::list<FunctionParameter> getParameters() const;
+	void setBlock(Block* setBlock);
+	Block* getBlock();
 };
 
 #endif

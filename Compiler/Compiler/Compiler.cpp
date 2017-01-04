@@ -2,7 +2,7 @@
 
 Compiler::Compiler()
 {
-	toLLVM = false;
+	_toLLVM = false;
 }
 
 Compiler::Compiler(bool toLLVM) : Compiler()
@@ -22,16 +22,16 @@ Compiler::~Compiler()
 void Compiler::parseFile(std::string path)
 {
 	auto lines = FileHandling::getSource(path);
-	lex.tokenize(lines);
+	_lex.tokenize(lines);
 	auto output = getLexerOutput();
 }
 
 std::list<std::pair<std::string, TaggedLexeme>> Compiler::getLexerOutput()
 {
-	return lex.getOutput();
+	return _lex.getOutput();
 }
 
 void Compiler::toLLVMFlag(bool flag)
 {
-	toLLVM = flag;
+	_toLLVM = flag;
 }

@@ -3,20 +3,18 @@
 
 #include <string>
 #include <unordered_map>
-#include <iostream>
-#include <utility>
 
 #include "ErrorCodes.h"
-#include "Function.h"
+#include "Class.h"
 
 class RootNode
 {
 private:
-	std::unordered_map<std::string, Function*> _functions;
+	std::unordered_map<std::string, Class*> _classes;
 
-public:
-	void addFunction(std::string fNameWithScope, Function* function);
-	Function* getFunctionSignature(std::string functionWithScope);
+public:	
+	void addClass(std::string className, Class* classPtr);
+	Class* getClass(std::string className);
 };
 
 #endif

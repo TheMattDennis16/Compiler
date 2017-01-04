@@ -3,7 +3,7 @@
 
 #include "Type.h"
 
-class Char : Type
+class Char : public Type
 {
 private:
 public:

@@ -148,4 +148,52 @@ BOOST_AUTO_TEST_CASE(Full_Function_Test)
 	printf("\n\n");
 }
 
+BOOST_AUTO_TEST_CASE(Class)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/class.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	std::string expected = "class,Test,{,}";
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, expected);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Include_Class)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/include_class.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	std::string expected = "include,\",file.a,\",;";
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, expected);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Single_Line_Comment)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/single_line_comment.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	std::string expected = "";
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, expected);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Comment_With_Expr)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/comment_with_expr.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	std::string expected = "int,a,=,1,;";
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, expected);
+	printf("\n\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()

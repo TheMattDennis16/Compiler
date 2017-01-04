@@ -9,12 +9,10 @@
 class Compiler
 {
 private:
-	LexicalAnalyser lex;
-	SyntaxAnalyser syn;
-	CodeGenerator gen;
-	bool toLLVM;
-
-	//std::list<std::pair<std::string, TaggedLexeme>> getLexerOutput();
+	LexicalAnalyser _lex;
+	SyntaxAnalyser _syn;
+	CodeGenerator _gen;
+	bool _toLLVM;
 
 public:
 	Compiler();
@@ -23,7 +21,6 @@ public:
 	~Compiler();
 
 	std::list<std::pair<std::string, TaggedLexeme>> getLexerOutput();
-
 	void parseFile(std::string path);
 	void toLLVMFlag(bool flag);
 };

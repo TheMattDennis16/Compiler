@@ -2,7 +2,7 @@
 
 Char::Char() : Type()
 {
-	id = TypeID::NEW_CHAR;
-	size = 1;
-	typeName = "Char";
+	_id = TypeID::NEW_CHAR;
+	_size = 1;
+	_typeName = "Char";
 }
