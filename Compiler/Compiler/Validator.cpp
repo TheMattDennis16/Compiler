@@ -15,18 +15,19 @@ TaggedLexeme Validator::_getNext()
 	return TaggedLexeme(Token(TokenTypes::UNEXPECTED, "Err"), 0);
 }
 
-// Function definition
-// [TYPE/CLASS] [IDENTIFIER] ( [TYPE_IDENTIFIER_PAIRS] ) {
-//
-// Variable definition
-// [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ;
-// or
-// [TYPE/CLASS] [IDENTIFIER] ;
-// or 
-// [TYPE] [IDENTIFIER] [OP] [EXPR] ;
-// Don't support operator overloading yet.
 bool Validator::validateType() 
 {
+	// Function definition
+	// [TYPE/CLASS] [IDENTIFIER] ( [TYPE_IDENTIFIER_PAIRS] ) {
+	//
+	// Object definition with implied call to a Constructor function.
+	// [CLASS] [IDENTIFIER] ( [EXPR] ) ;
+	// or
+	// [TYPE/CLASS] [IDENTIFIER] ;
+	// or 
+	// [TYPE] [IDENTIFIER] [OP] [EXPR] ;
+	// Don't support operator overloading yet.
+
 	TaggedLexeme current = (*_it);
 	std::vector<TaggedLexeme> stack = { current };
 	Class* isClass = nullptr;
@@ -85,9 +86,15 @@ bool Validator::validateType()
 				//No parameters.
 				if ((current = _getNext()).taggedWord.tokenValue == ";")
 				{
-					// [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ;
+					// [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ; with no EXPR paramaters.
+					
+					return true;
+				} 
+				else
+				{
+					// Throw error about invalid syntax.
+					return false;
 				}
-				return true;
 			}
 
 			std::list<FunctionParameter> params = validateFunctionParameters();
@@ -99,9 +106,28 @@ bool Validator::validateType()
 			else
 			{
 				//Must be second case: [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ;
-				validateExpression(")");
+				validateExpression();
+				current = _getNext();
+				if (current.taggedWord.tokenValue == ")") 
+				{
+					current = _getNext();
+					if (current.taggedWord.tokenValue == ";")
+					{
+						// Valid syntax for object construction. Add to block and return true.
+					}
+				}
+				else 
+				{
+					//Error, unexpected symbol
+				}
 			}
+
 			// Next part must be a ) symbol.
+			current = _getNext();
+			if (current.taggedWord.tokenValue == "{") 
+			{
+
+			} else if (current.taggedWord.tok)
 
 		}
 		else if (current.taggedWord.tokenValue == ";")
@@ -122,9 +148,10 @@ bool Validator::validateType()
 	}
 	else if (current.taggedWord.tokenType == TokenTypes::OPERATOR)
 	{
-		//Node* newNode = new Assignment();
-		//_activeBlock->addNode(newNode);
 		// Must be Rule 4 (Assignment OP), next must evaluate to valid expression.
+		Node* rightOperand = validateExpression();
+		Node* newNode = new Assignment(_activeBlock, toUse, rightOperand);
+		_activeBlock->addNode(newNode);		
 	}
 	else
 	{
@@ -161,12 +188,30 @@ bool Validator::_isInLoop()
 	return isInLoop;
 }
 
-// Statement Types
-// IF ( [BOOL_EXPR] ) { 
-// 
-// WHILE ( [BOOL_EXPR] ) { 
-// 
-// FOR ( 
+// FOR ( EXPR ; EXPR ; EXPR ) {
+For* Validator::_validateFor() 
+{
+	// Only allow iterative controls.
+	// Must follow syntax:
+	// FOR ( EXPR; EXPR; EXPR) {
+	// where the expressions must be null or (in order):
+	// 1) type declaration/definition
+	// 2) boolean checkable expression
+	// 3) identifier iteration
+}
+
+// WHILE ( BOOL_EXPR ) {
+While* Validator::_validateWhile() 
+{
+
+}
+
+// IF ( BOOL_EXPR ) { 
+If* Validator_validateIf() 
+{
+
+}
+
 bool Validator::validateStatement()
 {
 	TaggedLexeme tag = (*_it);
@@ -176,16 +221,11 @@ bool Validator::validateStatement()
 	}
 	else if (tag.taggedWord.tokenValue == "for") 
 	{
-		// Only allow iterative controls.
-		// Must follow syntax:
-		// FOR ( EXPR; EXPR; EXPR) {
-		// where the expressions must be null or (in order):
-		// 1) type declaration/definition
-		// 2) boolean checkable expression
-		// 3) identifier iteration
+		_validateFor();
 	}
 	else if (tag.taggedWord.tokenValue == "while") 
 	{
+		_validateWhile();
 	}
 	else if (tag.taggedWord.tokenValue == "break")
 	{
@@ -220,7 +260,7 @@ bool Validator::validateClass()
 	_nestingLevel++;
 }
 
-// Should always evaluate to:
+// Should evaluate to:
 // [IDENT] [OP] [VALUE]
 // where [VALUE] can be another nested Expr.
 // e.g.
@@ -228,8 +268,8 @@ bool Validator::validateClass()
 // a        =      b     +      c     *    2      ;
 // a        =   (  b     +   (  c     *    2    ));
 // Except in case of function call. Which must be:
-// IDENT ( FUNCTION_PARAMS_EXPR ) ;
-Node* Validator::validateExpression(std::string endSymbol)
+// VARIABLE_IDENT . FUNCTION_NAME( FUNCTION_PARAMS_EXPR ) ;
+Node* Validator::validateExpression()
 {
 	TaggedLexeme current = (*_it);
 	std::vector<TaggedLexeme> stack{ current, current = _getNext() };
@@ -322,7 +362,7 @@ bool Validator::validateSyntax()
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::IDENTIFIER)
 		{
-			Node* expression = validateExpression(";");
+			Node* expression = validateExpression();
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::SYMBOL)
 		{

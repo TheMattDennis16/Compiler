@@ -8,14 +8,18 @@
 class Assignment : public Node
 {
 private:
-	//Type contains value information.
-	Node _type; //Type or Class
-	Block* _block; //Scope for variable
-	std::string _identifier;
-
+	Block* _parent; //Scope for variable
+	Node* _leftOperand;
+	Node* _rightOperand; //Must be valid expression.
 
 public:
-	Assignment(Node type, Block* block, std::string identifier);
+	/**
+	* Assignment operator constructor.
+	* @param p   Pointer to the parent block.
+	* @param lOp Left operand for the assignment operator, either a Class as a type or a raw Type.
+	* @param rOp Right operand for the assignment operator. Must be a valid expression. Check type later in tree validation step.
+	*/
+	Assignment(Block* p, Type* lOp, Node* rOp);
 };
 
 #endif

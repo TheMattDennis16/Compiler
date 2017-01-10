@@ -71,15 +71,25 @@ bool Class::doParamsMatchSignature(std::string fName, std::list<FunctionParamete
 		if (params.size() != fparams.size())
 			continue;
 
+		bool isMatch = true;
 		auto paramValsIt = params.begin();
 		for (FunctionParameter param : fparams)
 		{
-
-			if (param._type == (*paramValsIt)._type)
-
+			if (param._type != (*paramValsIt)._type)
 				paramValsIt++;
+			else
+			{
+				isMatch = false;
+				break;
+			}
+		}
+
+		if (isMatch)
+		{
+			return true;
 		}
 	}
+	return false;
 }
 
 bool Class::isInSymbolTable(Symbol& symbol)
