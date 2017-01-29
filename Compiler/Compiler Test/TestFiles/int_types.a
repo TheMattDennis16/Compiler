@@ -1,0 +1,4 @@
+int8 a = 1;
+int16 b = 2;
+int32 c = 3;
+int64 d = 4;

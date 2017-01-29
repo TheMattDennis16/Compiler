@@ -2,7 +2,7 @@
 
 Function::Function(std::list<FunctionParameter>& params, std::string name, NodeDetails details) : Node(NodeDetails(details._parent, TokenTypes::IDENTIFIER, details._line))
 {
-	_block = new Block(this);
+	_block = new Block(Node::NodeDetails(this, 0, details._line));
 	_params = params;
 	_name = name;
 }

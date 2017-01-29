@@ -2,6 +2,8 @@
 #define COMPILER_HH
 
 #include "LexicalAnalyser.h"
+#include "Prescan.h"
+#include "Validator.h"
 #include "CodeGenerator.h"
 #include "FileHandling.h"
 
@@ -9,6 +11,8 @@ class Compiler
 {
 private:
 	LexicalAnalyser _lex;
+	Prescan _pre;
+	Validator _val;
 	CodeGenerator _gen;
 	bool _toLLVM;
 
@@ -40,7 +44,7 @@ public:
 	* Returns the output of the Lexical Analyser. 
 	* @return An std::list of pairs. Each pair consists of a String and a TaggedLexeme.
 	*/
-	std::list<std::pair<std::string, TaggedLexeme>> getLexerOutput();
+	std::list<TaggedLexeme> getLexerOutput();
 
 	/**
 	* Parses the file specified in the parameter String.

@@ -15,12 +15,6 @@ void Block::addNode(Node* node)
 	_nodes.push_back(node);
 }
 
-Node* Block::getParent()
+Block::Block(Node::NodeDetails nodeDetails) : Node(nodeDetails)
 {
-	return _parent;
-}
-
-Block::Block(Node* parent)
-{
-	_parent = parent;
 }

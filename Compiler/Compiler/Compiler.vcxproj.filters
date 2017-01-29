@@ -99,6 +99,12 @@
     <ClCompile Include="If.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Prescan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.h">
@@ -186,6 +192,24 @@
       <Filter>Header Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="Continue.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionCall.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Declaration.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Identifier.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes\Int8.h">
+      <Filter>Header Files\Lexer\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Prescan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeDetails.h">
       <Filter>Header Files\AST</Filter>
     </ClInclude>
   </ItemGroup>

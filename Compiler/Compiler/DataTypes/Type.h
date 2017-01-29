@@ -1,17 +1,20 @@
 #ifndef TYPE_HH
 #define TYPE_HH
 
-#include "Char.h"
+#include "../Node.h"
 
 #include <string>
 
-class Type
+class Type : public Node
 {
 public:
 	int _id;
 	int _size;
 	std::string _typeName;
 	std::string _value;
+	Type(Node::NodeDetails nodeDetails) : Node(nodeDetails)
+	{
+	}
 };
 
 enum TypeID

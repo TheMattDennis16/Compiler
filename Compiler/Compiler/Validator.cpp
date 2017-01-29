@@ -1,8 +1,12 @@
 #include "Validator.h"
 
-Validator::Validator(taglist tags)
+Validator::Validator()
 {
 	_nestingLevel = 0;
+}
+
+Validator::Validator(taglist tags) : Validator()
+{
 	_tokens = tags;
 }
 
@@ -15,7 +19,13 @@ TaggedLexeme Validator::_getNext()
 	return TaggedLexeme(Token(TokenTypes::UNEXPECTED, "Err"), 0);
 }
 
-bool Validator::validateType() 
+Node* Validator::_validateOperator(std::vector<TaggedLexeme> stack)
+{
+	// Called by the _validateExpr function
+	// [IDENTIFIER] [OP] [EXPR] ;
+}
+
+Node* Validator::_validateType() 
 {
 	// Function definition
 	// [TYPE/CLASS] [IDENTIFIER] ( [TYPE_IDENTIFIER_PAIRS] ) {
@@ -24,7 +34,7 @@ bool Validator::validateType()
 	// [CLASS] [IDENTIFIER] ( [EXPR] ) ;
 	// or
 	// [TYPE/CLASS] [IDENTIFIER] ;
-	// or 
+	// or (in which case go to _validateAssignment with current stack).
 	// [TYPE] [IDENTIFIER] [OP] [EXPR] ;
 	// Don't support operator overloading yet.
 
@@ -74,6 +84,7 @@ bool Validator::validateType()
 
 	current = _getNext();
 	stack.push_back(current);
+	//	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue)))
 	if (current.taggedWord.tokenType == TokenTypes::SYMBOL)
 	{
 		current = _getNext();
@@ -81,23 +92,24 @@ bool Validator::validateType()
 		// Must be one of top three cases
 		if (current.taggedWord.tokenValue == "(")
 		{
+			//Top two cases
 			if ((current = _getNext()).taggedWord.tokenValue == ")")
 			{
 				//No parameters.
 				if ((current = _getNext()).taggedWord.tokenValue == ";")
 				{
-					// [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ; with no EXPR paramaters.
+					// [CLASS] [IDENTIFIER] ( [EXPR] ) ; with no EXPR paramaters.
 					
 					return true;
 				} 
 				else
 				{
-					// Throw error about invalid syntax.
-					return false;
+					UnexpectedToken(current.line, __FILE__, current.taggedWord.tokenValue);
+					return nullptr;
 				}
 			}
 
-			std::list<FunctionParameter> params = validateFunctionParameters();
+			std::list<FunctionParameter> params = _validateFunctionParameters();
 			if (params.size() != 0)
 			{
 				for (FunctionParameter param : params)
@@ -106,7 +118,7 @@ bool Validator::validateType()
 			else
 			{
 				//Must be second case: [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ;
-				validateExpression();
+				Node* expr = _validateExpression();
 				current = _getNext();
 				if (current.taggedWord.tokenValue == ")") 
 				{
@@ -114,6 +126,8 @@ bool Validator::validateType()
 					if (current.taggedWord.tokenValue == ";")
 					{
 						// Valid syntax for object construction. Add to block and return true.
+						_activeBlock->addNode(toUse);
+						return true;
 					}
 				}
 				else 
@@ -127,13 +141,15 @@ bool Validator::validateType()
 			if (current.taggedWord.tokenValue == "{") 
 			{
 
-			} else if (current.taggedWord.tok)
+			}
 
 		}
 		else if (current.taggedWord.tokenValue == ";")
 		{
-			Symbol newSymbol(stack.at(1).taggedWord.tokenValue, _activeBlock, toUse);
+			//Third case confirmed.
 			// [TYPE/CLASS] [IDENTIFIER] ;
+			Symbol newSymbol(stack.at(1).taggedWord.tokenValue, _activeBlock, toUse);
+
 			if (!_activeClass->isInSymbolTable(newSymbol))
 			{
 				//Not found in symbol table.
@@ -149,8 +165,8 @@ bool Validator::validateType()
 	else if (current.taggedWord.tokenType == TokenTypes::OPERATOR)
 	{
 		// Must be Rule 4 (Assignment OP), next must evaluate to valid expression.
-		Node* rightOperand = validateExpression();
-		Node* newNode = new Assignment(_activeBlock, toUse, rightOperand);
+		Node* rightOperand = _validateExpression();
+		Node* newNode = new Assignment(_activeBlock, toUse, rightOperand, Node::NodeDetails(_activeBlock, current.taggedWord.tokenType, current.line));
 		_activeBlock->addNode(newNode);		
 	}
 	else
@@ -162,7 +178,7 @@ bool Validator::validateType()
 //Function Parameters:
 // TYPE IDENTIFIER
 // TYPE IDENTIFIER , IDENTIFIER ...
-std::list<FunctionParameter> Validator::validateFunctionParameters()
+std::list<FunctionParameter> Validator::_validateFunctionParameters()
 {
 	TaggedLexeme current = (*_it);
 }
@@ -198,59 +214,64 @@ For* Validator::_validateFor()
 	// 1) type declaration/definition
 	// 2) boolean checkable expression
 	// 3) identifier iteration
+	TaggedLexeme current = (*_it);
 }
 
 // WHILE ( BOOL_EXPR ) {
 While* Validator::_validateWhile() 
 {
-
+	TaggedLexeme current = (*_it);
 }
 
 // IF ( BOOL_EXPR ) { 
-If* Validator_validateIf() 
+If* Validator::_validateIf() 
 {
-
+	TaggedLexeme current = (*_it);
 }
 
-bool Validator::validateStatement()
+Node* Validator::_validateStatement()
 {
 	TaggedLexeme tag = (*_it);
+	Node* toReturn;
 	if (tag.taggedWord.tokenValue == "if")
 	{
-		_validateIf();
+		toReturn = _validateIf();
 	}
 	else if (tag.taggedWord.tokenValue == "for") 
 	{
-		_validateFor();
+		toReturn = _validateFor();
 	}
 	else if (tag.taggedWord.tokenValue == "while") 
 	{
-		_validateWhile();
+		toReturn = _validateWhile();
 	}
 	else if (tag.taggedWord.tokenValue == "break")
 	{
 		if(_isInLoop())
-			_activeBlock->addNode(new Break(NodeDetails(_activeFunction, tag.taggedWord.tokenType, tag.line)));
+			_activeBlock->addNode(new Break(Node::NodeDetails(_activeFunction, tag.taggedWord.tokenType, tag.line)));
+		else BreakNotInLoop(tag.line, __FILE__);
 	}
 	else if (tag.taggedWord.tokenValue == "continue")
 	{
 		if (_isInLoop())
-			_activeBlock->addNode(new Continue(NodeDetails(_activeFunction, tag.taggedWord.tokenType, tag.line)));
+			_activeBlock->addNode(new Continue(Node::NodeDetails(_activeFunction, tag.taggedWord.tokenType, tag.line)));
+		else ContinueNotInLoop(tag.line, __FILE__);
 	}
 	else
 	{
-		//Unexpected
+		UnexpectedToken(tag.line, __FILE__, tag.taggedWord.tokenValue);
 	}
+	return toReturn;
 }
 
 // class [IDENTIFER] {
-bool Validator::validateClass()
+Class* Validator::_validateClass()
 {
 	auto tag = _getNext();
 	if (_nestingLevel > 0)
 		ImbalancedBraces(tag.line, __FILE__);
 
-	_activeClass = new Class(tag.taggedWord.tokenValue);
+	//_activeClass = new Class(tag.taggedWord.tokenValue);
 	if (tag.taggedWord.tokenType != TokenTypes::IDENTIFIER)
 		NotValidWord(tag.line, __FILE__, tag.taggedWord.tokenValue);
 	tag = _getNext();
@@ -269,9 +290,16 @@ bool Validator::validateClass()
 // a        =   (  b     +   (  c     *    2    ));
 // Except in case of function call. Which must be:
 // VARIABLE_IDENT . FUNCTION_NAME( FUNCTION_PARAMS_EXPR ) ;
-Node* Validator::validateExpression()
+// OR
+// FUNCTION_NAME ( FUNCTION_PARAMS_EXPR ) ;
+Node* Validator::_validateExpression()
 {
 	TaggedLexeme current = (*_it);
+	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue)))
+	{
+		return _validateType();
+	}
+	
 	std::vector<TaggedLexeme> stack{ current, current = _getNext() };
 	if (current.taggedWord.tokenValue == "(")
 	{
@@ -283,7 +311,7 @@ Node* Validator::validateExpression()
 	return nullptr;
 }
 
-bool Validator::validateSymbol()
+bool Validator::_validateSymbol()
 {
 	TaggedLexeme current = (*_it);
 	if (current.taggedWord.tokenValue == "}")
@@ -320,7 +348,7 @@ bool Validator::validateSymbol()
 				}
 				else
 				{
-					//Throw unknown parent type error?
+					NotExpectedParentPointerType(current.line, __FILE__, "Block");
 				}
 			}
 		}
@@ -334,39 +362,42 @@ bool Validator::validateSymbol()
 			ImbalancedBraces(current.line, __FILE__);
 		}
 	}
-	//Should never occur section:
 	else if (current.taggedWord.tokenValue == "{")
 	{
+		//Should never occur section.
 		UnexpectedSymbol(current.line, __FILE__, '{');
 		_nestingLevel++;
 	}
 }
 
-bool Validator::validateSyntax()
+bool Validator::_validateSyntax()
 {
 	do 
 	{
 		TaggedLexeme current = (*_it);
 		if (current.taggedWord.tokenValue == "class")
 		{
-			validateClass();
+			Class* newClass = _validateClass();
+			if (_activeClass == nullptr) 
+			{
+				_activeClass = newClass;
+			}
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::KEYWORD)
 		{
-			//Statements & "CLASS" word
-			validateStatement();
+			Node* statement = _validateStatement();
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::TYPE)
 		{
-			validateType();
+			Node* type = _validateType();
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::IDENTIFIER)
 		{
-			Node* expression = validateExpression();
+			Node* expression = _validateExpression();
 		}
 		else if (current.taggedWord.tokenType == TokenTypes::SYMBOL)
 		{
-			validateSymbol();
+			_validateSymbol();
 		}
 	} while (++_it != _tokens.end());
 }
@@ -383,3 +414,44 @@ bool Validator::validateSyntax()
 		}
 	}
 }*/
+
+void Validator::addTags(taglist tags)
+{
+	_tokens = tags;
+}
+
+void Validator::_resetPrivateData()
+{
+	_nestingLevel = 0;
+	taglist _tokens = taglist();
+	tagIt _it = tagIt();
+	RootNode _rootNode = RootNode();
+	Class* _activeClass = nullptr;
+	Block* _activeBlock = nullptr;
+	Function* _activeFunction = nullptr;
+}
+
+bool Validator::buildTree()
+{
+	if (_tokens.size() > 0) 
+	{
+		_validateSyntax();
+	}
+	else
+	{
+		NoLexemesFound(0, __FILE__);
+	}
+}
+
+bool Validator::buildTree(taglist tags)
+{
+	_tokens = tags;
+	if (_tokens.size() > 0)
+	{
+		_validateSyntax();
+	}
+	else
+	{
+		NoLexemesFound(0, __FILE__);
+	}
+};

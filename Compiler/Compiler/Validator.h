@@ -7,6 +7,7 @@
 #include "FileHandling.h"
 #include "TypeParsing.h"
 
+#include "Node.h"
 #include "Expr.h"
 #include "Function.h"
 #include "Assignment.h"
@@ -16,6 +17,8 @@
 #include "Class.h"
 #include "Break.h"
 #include "Continue.h"
+#include "DataTypes\Int8.h"
+
 
 typedef std::list<TaggedLexeme> taglist;
 typedef std::list<TaggedLexeme>::iterator tagIt;
@@ -31,6 +34,7 @@ private:
 	Block* _activeBlock;
 	Function* _activeFunction;
 
+protected:
 	/*
 	* Increments the iterator to load the next available TaggedLexeme. This updates the private _it Iterator for the tag std::list
 	*/
@@ -63,7 +67,67 @@ private:
 	*/
 	bool _isInLoop();
 
+	/**
+	* Parses the Lexeme stream to identify and construct Function Parameter objects for insertion into the Function class.
+	* @return An std::list of FunctionParameter objects.
+	*/
+	std::list<FunctionParameter> _validateFunctionParameters();
+
+	/**
+	* Parses the Lexeme Stream when the first tag is a Class or Type.
+	* @return A generic base class pointer of a range of different types containing the subtree for the Node type.
+	*/
+	Node* _validateType();
+
+	/**
+	* Validate syntax starting from a class tag.
+	* @return a pointer to the new Class object.
+	*/
+	Class* _validateClass();
+
+	/**
+	* Validate that the lexeme stream is a valid expression. Opens a new _activeClass pointer to store the new class data.
+	* @return A pointer to a node of an Expression.
+	*/
+	Node* _validateExpression();
+
+	/**
+	* Beginning point for validating the stream of Lexemes.
+	*/
+	bool _validateSyntax();
+
+	/**
+	* Performs validation of opening and close braces
+	*/
+	bool _validateSymbol();
+
+	/**
+	* Performs parsing of language statements e.g. IF, ELSE, FOR, WHILE, BREAK, CONTINUE.
+	*/
+	Node* _validateStatement();
+
+	/**
+	* Perform the parsing for operators.
+	* @param stack Accept the current stack object to continue where previously left off.
+	*/
+	Node* _validateOperator(std::vector<TaggedLexeme> stack);
+
+	// Update to use advanceToToken to move parse past minor non-blocking errors. e.g.
+	// Type mismatch, unrecognised identifier, invalid keyword usage, unexpected symbol etc.
+	//void _advanceToToken(Token& token);
+
+	/**
+	* Resets the private data back to default state so that the class may be reused from a blank state.
+	*/
+	void _resetPrivateData();
+
 public:
+
+	/**
+	* Default constructor for the Validator class.
+	*/
+	Validator();
+
 	/**
 	* Constructor for Validator class.
 	* @param tags An std::list of TaggedLexeme's, containing the tag and line information gathered from parsing.
@@ -71,46 +135,22 @@ public:
 	Validator(taglist tags);
 
 	/**
-	* Parses the Lexeme stream to identify and construct Function Parameter objects for insertion into the Function class.
-	* @return An std::list of FunctionParameter objects.
+	* Method to call for building of the Abstract Syntax Tree.
 	*/
-	std::list<FunctionParameter> validateFunctionParameters();
+	bool buildTree();
 
 	/**
-	* Parses the Lexeme Stream when the first tag is a Class or Type.
-	* @return A boolean true if it parsed into a valid code tree.
+	* Overload method which uses the specified taglist rather than any previously defined one.
+	* param tags An std::list of tags to build the AST from.
+	* return true if the tree was built successfully, false if it was not.
 	*/
-	bool validateType();
+	bool buildTree(taglist tags);
 
 	/**
-	* Validate syntax starting from a class tag.
+	* Public method to allow tags to be added
+	* param tags an std::list of tags to be used later on should a buildTree method be called.
 	*/
-	bool validateClass();
-
-	/**
-	* Validate that the lexeme stream is a valid expression. Opens a new _activeClass pointer to store the new class data.
-	* @return A pointer to a node of an Expression.
-	*/
-	Node* validateExpression();
-
-	/**
-	* Beginning point for validating the stream of Lexemes.
-	*/
-	bool validateSyntax();
-
-	/**
-	* Performs validation of opening and close braces
-	*/
-	bool validateSymbol();
-
-	/**
-	* Performs parsing of language statements e.g. IF, ELSE, FOR, WHILE, BREAK, CONTINUE. 
-	*/
-	bool validateStatement();
-
-	// Update to use advanceToToken to move parse past minor non-blocking errors. e.g.
-	// Type mismatch, unrecognised identifier, invalid keyword usage, unexpected symbol etc.
-	//void advanceToToken(Token& token);
+	void addTags(taglist tags);
 };
 
 #endif

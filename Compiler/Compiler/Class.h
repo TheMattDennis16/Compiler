@@ -4,6 +4,8 @@
 #include <string>
 #include <list>
 
+#include "DataTypes\Type.h"
+#include "FunctionCall.h"
 #include "SymbolTable.h"
 #include "ErrorCodes.h"
 #include "Function.h"
@@ -27,7 +29,7 @@ public:
 	* Constructor for the Class object. Stores the identifier of the class.
 	* @param name The String instance containing the identifier of the class.
 	*/
-	Class(std::string name);
+	Class(std::string name, Node::NodeDetails nodeDetails);
 
 	/**
 	* Destructor for the Class object. Performs any tear-down required.
@@ -60,7 +62,16 @@ public:
 	* @param params The value types entered which are used to compare against the expected values.
 	* @return True if the funnction parameters match a result found by the function name specified.
 	*/
-	bool doParamsMatchSignature(std::string fName, std::list<FunctionParameterValue> params);
+	Function* doParamsMatchSignature(std::string fName, std::list<FunctionParameterValue> params);
+
+
+	/**
+	* Method to call a specified function name with the parameters given.
+	* @param fName  Function name to call.
+	* @param params An std::list of FunctionParameterValue objects.
+	* @return A FunctionCall object to be included in the tree.
+	*/
+	FunctionCall callFunction(std::string fName, std::list<FunctionParameterValue> params);
 
 	/**
 	* Adds a pointer to a Function instance to the list of stored Functions.

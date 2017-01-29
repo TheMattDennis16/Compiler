@@ -8,8 +8,6 @@
 #include <string>
 #include <fstream>
 
-typedef std::vector<std::vector<std::string>> grammars;
-
 class FileHandling
 {
 public:

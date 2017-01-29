@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE(Single_Line_Variable)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "int,a,=,1,;");
+	BOOST_REQUIRE_EQUAL(sresult, "int8,a,=,1,;");
 	printf("\n\n");
 }
 
@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(Double_Line_Variable)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "int,a,=,2,;");
+	BOOST_REQUIRE_EQUAL(sresult, "int32,a,=,2,;");
 	printf("\n\n");
 }
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(Function_With_Params)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "void,test,(,int,a,,,char,b,),{,}");
+	BOOST_REQUIRE_EQUAL(sresult, "void,test,(,int8,a,,,char,b,),{,}");
 	printf("\n\n");
 }
 
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(Index_Access)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "int,a,=,numbers,[,1,],;");
+	BOOST_REQUIRE_EQUAL(sresult, "int8,a,=,numbers,[,1,],;");
 	printf("\n\n");
 }
 
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(Single_Operator)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "int,a,=,1,+,2,;");
+	BOOST_REQUIRE_EQUAL(sresult, "int8,a,=,1,+,2,;");
 	printf("\n\n");
 }
 
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(Compound_Operator)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "int,test,=,6,;,test,+=,7,;");
+	BOOST_REQUIRE_EQUAL(sresult, "int16,test,=,6,;,test,+=,7,;");
 	printf("\n\n");
 }
 
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE(Full_Function_Test)
 	compiler.parseFile("TestFiles/full_test.a");
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
-	std::string expected = "int,doMath,(,double,a,,,double,b,),{,char,[,],veryLongName,=,\",Testing,\",;,for,(,int,i,=,0,;,i,<,5,;,i,++,),{,},int,result,=,2,*,(,b,+,3,),;,double,retVal,=,0,;,if,(,result,==,15,),retVal,=,result,;,else,{,retVal,=,1000,;,},return,retVal,;,}";
+	std::string expected = "int8,doMath,(,double,a,,,double,b,),{,char,[,],veryLongName,=,\",Testing,\",;,for,(,int8,i,=,0,;,i,<,5,;,i,++,),{,},int8,result,=,2,*,(,b,+,3,),;,double,retVal,=,0,;,if,(,result,==,15,),retVal,=,result,;,else,{,retVal,=,1000,;,},return,retVal,;,}";
 	sresult = sresult.substr(0, sresult.size() - 1);
 	for (int i = 0; i < sresult.size(); i++)
 	{
@@ -190,7 +190,19 @@ BOOST_AUTO_TEST_CASE(Comment_With_Expr)
 	compiler.parseFile("TestFiles/comment_with_expr.a");
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
-	std::string expected = "int,a,=,1,;";
+	std::string expected = "int8,a,=,1,;";
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, expected);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Int_Types)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/int_types.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	std::string expected = "int8,a,=,1,;,int16,b,=,2,;,int32,c,=,3,;,int64,d,=,4,;";
 	sresult = sresult.substr(0, sresult.size() - 1);
 	BOOST_REQUIRE_EQUAL(sresult, expected);
 	printf("\n\n");

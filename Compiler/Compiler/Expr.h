@@ -5,7 +5,8 @@
 
 class Expr : public Node
 {
-
+private:
+public:
 };
 
 #endif

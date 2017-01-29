@@ -35,7 +35,7 @@ private:
 	TokenCollection _tokenCollection;
 	StringTagging _taggerTools;
 	std::list<std::string> _lines;
-	std::list<std::pair<std::string, TaggedLexeme>> _output;
+	std::list<TaggedLexeme> _output;
 	std::list<std::string>::iterator _linesIt;
 	char _previousChar;
 	char _nextChar = ' ';
@@ -94,7 +94,7 @@ public:
 	* Returns the current output list of tagged Lexeme's as a pair with the String being the Token's representation.
 	* @return An std::list of <string, TaggedLexeme> pairs.
 	*/
-	std::list<std::pair<std::string, TaggedLexeme>> getOutput();
+	std::list<TaggedLexeme> getOutput();
 };
 
 #endif

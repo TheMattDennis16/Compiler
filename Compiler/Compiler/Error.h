@@ -83,4 +83,46 @@ private:
 public:
 	IdentifierAlreadyInUseInScope(const int line, const char* file, std::string identifier);
 };
+
+class ClassNameAlreadyInUse : Warning
+{
+private:
+public:
+	ClassNameAlreadyInUse(const int line, const char* file, std::string identifier);
+};
+
+class NoLexemesFound : Fatal
+{
+private:
+public:
+	NoLexemesFound(const int line, const char* file);
+};
+
+class NotExpectedParentPointerType : Warning
+{
+private:
+public:
+	NotExpectedParentPointerType(const int line, const char* file, std::string expected);
+};
+
+class BreakNotInLoop : Warning
+{
+private:
+public:
+	BreakNotInLoop(const int line, const char* file);
+};
+
+class ContinueNotInLoop : Warning
+{
+private:
+public:
+	ContinueNotInLoop(const int line, const char* file);
+};
+
+class NotValidClassName : Warning
+{
+private:
+public:
+	NotValidClassName(const int line, const char* file, std::string identifier);
+};
 #endif

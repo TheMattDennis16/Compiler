@@ -1,6 +1,6 @@
 #include "Class.h"
 
-Class::Class(std::string name) : _name(name)
+Class::Class(std::string name, Node::NodeDetails nodeDetails) : _name(name), Type(nodeDetails)
 {
 	_typeName = name;
 	_id = TypeID::NEW_CLASS;
@@ -39,6 +39,11 @@ std::list<Function*> Class::_findAllFunctionNameMatches(std::string name)
 	return results;
 }
 
+FunctionCall Class::callFunction(std::string fName, std::list<FunctionParameterValue> params)
+{
+	return FunctionCall("", std::list<FunctionParameterValue>{}, nullptr, Node::NodeDetails(nullptr, 0, 0));
+}
+
 void Class::addFunction(Function* function)
 {
 	if (containsFunctionSignature(function) == true)
@@ -60,10 +65,9 @@ bool Class::containsFunctionSignature(Function* function)
 	return false;
 }
 
-bool Class::doParamsMatchSignature(std::string fName, std::list<FunctionParameterValue> params)
+Function* Class::doParamsMatchSignature(std::string fName, std::list<FunctionParameterValue> params)
 {
 	std::list<Function*> functions = _findAllFunctionNameMatches(fName);
-	Function* match = nullptr;
 
 	for (Function* fptr : functions)
 	{
@@ -86,10 +90,10 @@ bool Class::doParamsMatchSignature(std::string fName, std::list<FunctionParamete
 
 		if (isMatch)
 		{
-			return true;
+			return fptr;
 		}
 	}
-	return false;
+	return nullptr;
 }
 
 bool Class::isInSymbolTable(Symbol& symbol)

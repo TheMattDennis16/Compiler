@@ -319,10 +319,10 @@ TaggedLexeme::TaggedLexeme(Token& t, int l)
 
 void LexicalAnalyser::_addToOutput(Token& token)
 {
-	_output.push_back(std::pair<std::string, TaggedLexeme>(token.tokenValue, TaggedLexeme(token, _iLine)));
+	_output.push_back(TaggedLexeme(token, _iLine));
 }
 
-std::list<std::pair<std::string, TaggedLexeme>> LexicalAnalyser::getOutput()
+std::list<TaggedLexeme> LexicalAnalyser::getOutput()
 {
 	return _output;
 }

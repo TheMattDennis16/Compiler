@@ -5,7 +5,10 @@ TokenCollection::TokenCollection()
 	//Can't store identifiers, they're the final resort of token checking.
 
 	//Basic raw types
-	_collection.insert({ std::string("int"),    Token(TokenTypes::TYPE, "int") });
+	_collection.insert({ std::string("int8"),    Token(TokenTypes::TYPE, "int8") });
+	_collection.insert({ std::string("int16"),    Token(TokenTypes::TYPE, "int16") });
+	_collection.insert({ std::string("int32"),    Token(TokenTypes::TYPE, "int32") });
+	_collection.insert({ std::string("int64"),    Token(TokenTypes::TYPE, "int64") });
 	_collection.insert({ std::string("char"),   Token(TokenTypes::TYPE, "char") });
 	_collection.insert({ std::string("bool"),   Token(TokenTypes::TYPE, "bool") });
 	_collection.insert({ std::string("double"), Token(TokenTypes::TYPE, "double") });

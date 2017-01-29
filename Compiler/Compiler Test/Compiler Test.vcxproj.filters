@@ -16,30 +16,6 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{4a55eb35-b3e2-4f2a-b06a-c0c292dbf135}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\AST">
-      <UniqueIdentifier>{523e7d3b-628c-4523-ae3d-82f84d7867c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Error">
-      <UniqueIdentifier>{7c31b4ed-a69e-4128-a090-bdc6f2fbe442}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lexer">
-      <UniqueIdentifier>{9e7f755d-8b64-4a3b-badb-ca03d0caec71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lexer\DataTypes">
-      <UniqueIdentifier>{1228fdb2-0a19-4ced-8b47-f447cc4ee6e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\AST">
-      <UniqueIdentifier>{cdae9694-23cd-4a2e-9be2-56b26247ab86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Error">
-      <UniqueIdentifier>{8ed82635-6abf-4bb7-82e3-8ae56830693b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Lexer">
-      <UniqueIdentifier>{8ba1cf1d-73e5-4b48-a020-237db60ae5da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Lexer\DataTypes">
-      <UniqueIdentifier>{5eb6da52-477c-4202-b8b1-37b77ec484e4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
@@ -48,105 +24,12 @@
     <ClCompile Include="TestingTools.cpp">
       <Filter>Source Files\Testing</Filter>
     </ClCompile>
-    <ClCompile Include="..\Compiler\Function.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Node.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\RootNode.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\SymbolTable.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\SyntaxAnalyser.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Class.cpp">
-      <Filter>Source Files\AST</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Error.cpp">
-      <Filter>Source Files\Error</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\StringTagging.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Token.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\TokenCollection.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\DataTypes\Char.cpp">
-      <Filter>Source Files\Lexer\DataTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\Compiler.cpp">
+    <ClCompile Include="ASTTests.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\FileHandling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Compiler\TokenTypes.h">
-      <Filter>Header Files\Lexer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Compiler\Comparison.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Function.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Node.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\RootNode.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\SymbolTable.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Class.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\ErrorCodes.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Error.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\StringTagging.h">
-      <Filter>Header Files\Lexer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Token.h">
-      <Filter>Header Files\Lexer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\TokenCollection.h">
-      <Filter>Header Files\Lexer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\DataTypes\Char.h">
-      <Filter>Header Files\Lexer\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\DataTypes\Type.h">
-      <Filter>Header Files\Lexer\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\CodeGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\Compiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\FileHandling.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\LexicalAnalyser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Compiler\SyntaxAnalyser.h">
+    <ClInclude Include="TestingTools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

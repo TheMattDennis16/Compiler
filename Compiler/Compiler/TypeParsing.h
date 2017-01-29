@@ -4,6 +4,7 @@
 #include "DataTypes\Type.h"
 #include "DataTypes\Char.h"
 #include "DataTypes\Void.h"
+#include "DataTypes\Int8.h"
 
 class TypeParsing
 {
@@ -16,10 +17,22 @@ public:
 	*/
 	static Type* getType(std::string typeName)
 	{
+		//Convert to switch at some point.
 		if (typeName == "char")
 			return new Char();
 		else if (typeName == "void")
 			return new Void();
+		else if (typeName == "int8")
+			return new Int8();
+		else return nullptr;
+	}
+
+	static bool isClass()
+	{
+
+		//I may need to effectively prescan for all the different class names a solution may contain. 
+		//That way my map of Classes, currently stored in the RootNode class can actually be reliably used.
+
 	}
 };
 

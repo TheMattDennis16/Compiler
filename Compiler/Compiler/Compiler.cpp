@@ -24,9 +24,12 @@ void Compiler::parseFile(std::string path)
 	auto lines = FileHandling::getSource(path);
 	_lex.tokenize(lines);
 	auto output = getLexerOutput();
+	_pre.addTags(output);
+	std::list<std::string> classNames = _pre.getClassNames();
+
 }
 
-std::list<std::pair<std::string, TaggedLexeme>> Compiler::getLexerOutput()
+std::list<TaggedLexeme> Compiler::getLexerOutput()
 {
 	return _lex.getOutput();
 }
