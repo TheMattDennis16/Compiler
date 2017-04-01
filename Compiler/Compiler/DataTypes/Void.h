@@ -7,7 +7,11 @@ class Void : public Type
 {
 private:
 public:
-	Void();
+	/**
+	* Default constructor for the Void return type.
+	* @param nodeDetails the details for this node needed for easier tree traversal
+	*/
+	Void(Node::NodeDetails nodeDetails);
 };
 
 #endif

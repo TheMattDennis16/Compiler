@@ -15,15 +15,15 @@ public:
 	* @param typeName The string representation of the Token to have its type identified.
 	* @return A pointer to a base class Type object.
 	*/
-	static Type* getType(std::string typeName)
+	static Type* getType(std::string typeName, Node::NodeDetails nodeDetails)
 	{
 		//Convert to switch at some point.
 		if (typeName == "char")
-			return new Char();
+			return new Char(nodeDetails);
 		else if (typeName == "void")
-			return new Void();
+			return new Void(nodeDetails);
 		else if (typeName == "int8")
-			return new Int8();
+			return new Int8(nodeDetails);
 		else return nullptr;
 	}
 

@@ -2,13 +2,12 @@
 #define WHILE_HH
 
 #include "Node.h"
-#include "Expr.h"
 #include "Block.h"
 
 class While : public Node
 {
 private:
-	Expr* _expression;
+	Node* _expression;
 	Block* _block;
 
 public:
@@ -17,7 +16,7 @@ public:
 	* @param expression A pointer to the associated Expression object for this construct.
 	* @param block      A pointer to the block associated with this construct.
 	*/
-	While(Expr* expression, Block* block);
+	While(Node* expression, Block* block);
 };
 
 #endif

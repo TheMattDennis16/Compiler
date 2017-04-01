@@ -52,7 +52,7 @@ void LexicalAnalyser::tokenize(std::list<std::string>& list)
 		}
 		else if (_previousChar == '\\')
 		{
-			 if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "\=")); getNextChar(); }
+			 if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "\\=")); getNextChar(); }
 			else { _addToOutput(Token(TokenTypes::OPERATOR, "\\")); getNextChar(); }
 		}
 		else if (_previousChar == '*')
@@ -256,6 +256,7 @@ bool LexicalAnalyser::getNextChar()
 		if (_isFinished)
 			return false;
 	}
+	return true;
 }
 
 bool LexicalAnalyser::_getNextCharNewLine()

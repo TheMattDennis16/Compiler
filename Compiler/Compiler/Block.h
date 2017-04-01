@@ -38,6 +38,13 @@ public:
 	* @param node The node to be added to the std::list of Nodes.
 	*/
 	void addNode(Node* node);
+
+	/**
+	* Deep comparison operator for the Block node.
+	* @param The other operand in the comparison.
+	* @return True if the nodes have equal attribute values.
+	*/
+	bool operator==(const Block& right);
 };
 
 #endif

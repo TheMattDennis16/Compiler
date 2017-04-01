@@ -18,3 +18,8 @@ void Block::addNode(Node* node)
 Block::Block(Node::NodeDetails nodeDetails) : Node(nodeDetails)
 {
 }
+
+
+bool Block::operator==(const Block& right) {
+	return this->_nodes == right._nodes;
+}

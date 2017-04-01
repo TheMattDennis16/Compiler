@@ -11,9 +11,32 @@ BOOST_AUTO_TEST_CASE(Single_Line_Variable)
 	Compiler compiler;
 	compiler.parseFile("TestFiles/single_line_variable.a");
 	auto result = compiler.getLexerOutput();
+	//std::list<std::pair<std::string, TaggedLexeme>>
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
 	BOOST_REQUIRE_EQUAL(sresult, "int8,a,=,1,;");
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Decimal_Place_Assignment)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/float_assign.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, "double,a,=,2.0,;");
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Negative_Integer_Assignment)
+{
+	Compiler compiler;
+	compiler.parseFile("TestFiles/negative_integer_assignment.a");
+	auto result = compiler.getLexerOutput();
+	std::string sresult = TestingTools::lexToString(result);
+	sresult = sresult.substr(0, sresult.size() - 1);
+	BOOST_REQUIRE_EQUAL(sresult, "int32,a,=,-2,;");
 	printf("\n\n");
 }
 
@@ -136,7 +159,7 @@ BOOST_AUTO_TEST_CASE(Full_Function_Test)
 	std::string sresult = TestingTools::lexToString(result);
 	std::string expected = "int8,doMath,(,double,a,,,double,b,),{,char,[,],veryLongName,=,\",Testing,\",;,for,(,int8,i,=,0,;,i,<,5,;,i,++,),{,},int8,result,=,2,*,(,b,+,3,),;,double,retVal,=,0,;,if,(,result,==,15,),retVal,=,result,;,else,{,retVal,=,1000,;,},return,retVal,;,}";
 	sresult = sresult.substr(0, sresult.size() - 1);
-	for (int i = 0; i < sresult.size(); i++)
+	for (unsigned i = 0; i < sresult.size(); i++)
 	{
 		if (sresult.at(i) != expected.at(i))
 		{

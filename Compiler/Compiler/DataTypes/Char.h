@@ -7,7 +7,11 @@ class Char : public Type
 {
 private:
 public:
-	Char();
+	/**
+	* Default constructor for the Character type
+	* @param The details needed for storing this node in the tree
+	*/
+	Char(Node::NodeDetails nodeDetails);
 };
 
 #endif

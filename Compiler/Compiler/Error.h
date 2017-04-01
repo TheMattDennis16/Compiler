@@ -1,6 +1,5 @@
 #ifndef ERROR_HH
 #define ERROR_HH
-#define ERROR __LINE__, __FILE__
 
 #include "ErrorCodes.h"
 

@@ -3,7 +3,6 @@
 
 #include <list>
 
-#include "Expr.h"
 #include "Node.h"
 #include "Block.h"
 
@@ -12,7 +11,7 @@ class If : public Node
 private:
 	Block* _child;
 	std::list<Node*> _elseStatements;
-	Expr* _condition;
+	Node* _condition;
 
 public:
 	/**
@@ -23,7 +22,7 @@ public:
 	                        Must evaluate to a boolean value, checked in next phase.
 	* @param details        The NodeDetails class storing other information about this Node.    
 	*/
-	If(Block* child, std::list<Node*> elseStatements, Expr* condition, NodeDetails details);
+	If(Block* child, std::list<Node*> elseStatements, Node* condition, NodeDetails details);
 };
 
 #endif

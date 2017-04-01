@@ -9,7 +9,10 @@ class TestingTools
 {
 private:
 public:
-	static std::string lexToString(std::list<std::pair<std::string, TaggedLexeme>>);
+	/**
+	* Converts the std::list of TaggedLexemes into a string.
+	*/
+	static std::string lexToString(std::list<TaggedLexeme> list);
 };
 
 #endif

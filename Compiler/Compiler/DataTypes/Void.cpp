@@ -1,6 +1,6 @@
 #include "Void.h"
 
-Void::Void()
+Void::Void(Node::NodeDetails nodeDetails) : Type(nodeDetails)
 {
 	_id = TypeID::NEW_VOID;
 	_size = 0;

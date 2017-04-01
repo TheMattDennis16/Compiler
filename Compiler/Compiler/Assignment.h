@@ -15,12 +15,18 @@ private:
 public:
 	/**
 	* Assignment operator constructor.
-	* @param p   Pointer to the parent block.
 	* @param lOp Left operand for the assignment operator, either a Class as a type or a raw Type.
 	* @param rOp Right operand for the assignment operator. Must be a valid expression. Check type later in tree validation step.
 	* @param nodeDetails Details for the Node baseclass.
 	*/
-	Assignment(Block* p, Type* lOp, Node* rOp, NodeDetails nodeDetails);
+	Assignment(Type* lOp, Node* rOp, NodeDetails nodeDetails);
+
+	/**
+	* Deep comparison operator for the Assignment node
+	* @param right The right (other) node in the assignment expression.
+	* @return True if the nodes have matching values
+	*/
+	bool operator==(const Assignment& right);
 };
 
 #endif

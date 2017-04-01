@@ -105,6 +105,27 @@
     <ClCompile Include="Prescan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Assignment.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTypes\IntLiteral.cpp">
+      <Filter>Source Files\Lexer\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Addition.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTypes\Int8.cpp">
+      <Filter>Source Files\Lexer\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Subtraction.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Division.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Multiplication.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.h">
@@ -179,9 +200,6 @@
     <ClInclude Include="Symbol.h">
       <Filter>Header Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="Expr.h">
-      <Filter>Header Files\AST</Filter>
-    </ClInclude>
     <ClInclude Include="For.h">
       <Filter>Header Files\AST</Filter>
     </ClInclude>
@@ -210,6 +228,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NodeDetails.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes\IntLiteral.h">
+      <Filter>Header Files\Lexer\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Addition.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Subtraction.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Division.h">
+      <Filter>Header Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Multiplication.h">
       <Filter>Header Files\AST</Filter>
     </ClInclude>
   </ItemGroup>

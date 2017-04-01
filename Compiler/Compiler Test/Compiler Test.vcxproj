@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_63_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,11 +120,80 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Compiler\Addition.cpp" />
+    <ClCompile Include="..\Compiler\Assignment.cpp" />
+    <ClCompile Include="..\Compiler\Block.cpp" />
+    <ClCompile Include="..\Compiler\Class.cpp" />
+    <ClCompile Include="..\Compiler\Compiler.cpp" />
+    <ClCompile Include="..\Compiler\DataTypes\Char.cpp" />
+    <ClCompile Include="..\Compiler\DataTypes\IntLiteral.cpp" />
+    <ClCompile Include="..\Compiler\DataTypes\Void.cpp" />
+    <ClCompile Include="..\Compiler\Error.cpp" />
+    <ClCompile Include="..\Compiler\FileHandling.cpp" />
+    <ClCompile Include="..\Compiler\Function.cpp" />
+    <ClCompile Include="..\Compiler\FunctionCall.cpp" />
+    <ClCompile Include="..\Compiler\If.cpp" />
+    <ClCompile Include="..\Compiler\LexicalAnalyser.cpp" />
+    <ClCompile Include="..\Compiler\Node.cpp" />
+    <ClCompile Include="..\Compiler\Prescan.cpp" />
+    <ClCompile Include="..\Compiler\RootNode.cpp" />
+    <ClCompile Include="..\Compiler\StringTagging.cpp" />
+    <ClCompile Include="..\Compiler\Symbol.cpp" />
+    <ClCompile Include="..\Compiler\SymbolTable.cpp" />
+    <ClCompile Include="..\Compiler\Token.cpp" />
+    <ClCompile Include="..\Compiler\TokenCollection.cpp" />
+    <ClCompile Include="..\Compiler\Validator.cpp" />
     <ClCompile Include="ASTTests.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="TestingTools.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Compiler\Addition.h" />
+    <ClInclude Include="..\Compiler\Assignment.h" />
+    <ClInclude Include="..\Compiler\Block.h" />
+    <ClInclude Include="..\Compiler\Break.h" />
+    <ClInclude Include="..\Compiler\Class.h" />
+    <ClInclude Include="..\Compiler\CodeGenerator.h" />
+    <ClInclude Include="..\Compiler\Comparison.h" />
+    <ClInclude Include="..\Compiler\Compiler.h" />
+    <ClInclude Include="..\Compiler\Continue.h" />
+    <ClInclude Include="..\Compiler\DataTypes\Char.h">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\DataTypes\Int8.h" />
+    <ClInclude Include="..\Compiler\DataTypes\IntLiteral.h" />
+    <ClInclude Include="..\Compiler\DataTypes\Type.h" />
+    <ClInclude Include="..\Compiler\DataTypes\Void.h">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Declaration.h" />
+    <ClInclude Include="..\Compiler\Error.h" />
+    <ClInclude Include="..\Compiler\ErrorCodes.h" />
+    <ClInclude Include="..\Compiler\Expr.h" />
+    <ClInclude Include="..\Compiler\FileHandling.h" />
+    <ClInclude Include="..\Compiler\For.h" />
+    <ClInclude Include="..\Compiler\Function.h" />
+    <ClInclude Include="..\Compiler\FunctionCall.h" />
+    <ClInclude Include="..\Compiler\Identifier.h" />
+    <ClInclude Include="..\Compiler\If.h" />
+    <ClInclude Include="..\Compiler\LexicalAnalyser.h" />
+    <ClInclude Include="..\Compiler\Node.h" />
+    <ClInclude Include="..\Compiler\NodeDetails.h" />
+    <ClInclude Include="..\Compiler\Prescan.h" />
+    <ClInclude Include="..\Compiler\RootNode.h" />
+    <ClInclude Include="..\Compiler\StringTagging.h">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
+    <ClInclude Include="..\Compiler\Symbol.h" />
+    <ClInclude Include="..\Compiler\SymbolTable.h" />
+    <ClCompile Include="..\Compiler\TokenTypes.h">
+      <FileType>CppHeader</FileType>
+    </ClCompile>
+    <ClInclude Include="..\Compiler\Token.h" />
+    <ClInclude Include="..\Compiler\TokenCollection.h" />
+    <ClInclude Include="..\Compiler\TypeParsing.h" />
+    <ClInclude Include="..\Compiler\Validator.h" />
+    <ClInclude Include="..\Compiler\While.h" />
     <ClInclude Include="TestingTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,7 +18,7 @@ std::list<std::string> FileHandling::getSource(std::string file)
 	}
 	else
 	{
-		FileNotFound(ERROR);
+		FileNotFound(__LINE__, __FILE__);
 	}
 	return fileContents;
 }

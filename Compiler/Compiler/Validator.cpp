@@ -54,7 +54,7 @@ Node* Validator::_validateType()
 	}
 	else
 	{
-		isType = TypeParsing::getType(current.taggedWord.tokenValue);
+		isType = TypeParsing::getType(current.taggedWord.tokenValue, Node::NodeDetails(nullptr,0,0));
 	}
 	
 	current = _getNext();
@@ -166,7 +166,7 @@ Node* Validator::_validateType()
 	{
 		// Must be Rule 4 (Assignment OP), next must evaluate to valid expression.
 		Node* rightOperand = _validateExpression();
-		Node* newNode = new Assignment(_activeBlock, toUse, rightOperand, Node::NodeDetails(_activeBlock, current.taggedWord.tokenType, current.line));
+		Node* newNode = new Assignment(toUse, rightOperand, Node::NodeDetails(_activeBlock, current.taggedWord.tokenType, current.line));
 		_activeBlock->addNode(newNode);		
 	}
 	else
@@ -283,11 +283,20 @@ Class* Validator::_validateClass()
 
 // Should evaluate to:
 // [IDENT] [OP] [VALUE]
-// where [VALUE] can be another nested Expr.
+// where [VALUE] can be another nested Expression.
 // e.g.
 // [IDENT] [OP] [IDENT] [OP] [IDENT] [OP] [VALUE] ;
 // a        =      b     +      c     *    2      ;
 // a        =   (  b     +   (  c     *    2    ));
+//                     
+//                    [OP]
+//                   /    \
+//            [IDENT]      [OP]
+//                        /    \
+//                 [IDENT]      [OP]
+//                             /    \
+//                      [IDENT]      [VALUE]
+//
 // Except in case of function call. Which must be:
 // VARIABLE_IDENT . FUNCTION_NAME( FUNCTION_PARAMS_EXPR ) ;
 // OR
@@ -295,7 +304,7 @@ Class* Validator::_validateClass()
 Node* Validator::_validateExpression()
 {
 	TaggedLexeme current = (*_it);
-	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue)))
+	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue, Node::NodeDetails(nullptr, 0, 0))))
 	{
 		return _validateType();
 	}

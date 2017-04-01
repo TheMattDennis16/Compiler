@@ -41,6 +41,17 @@ public:
 
 	virtual Node* getParent();
 
+	/**
+	* Sets the internal NodeDetails instance to the specified data. Requred due to restrictions with the Type system not having ownership in an AST yet
+	* @param details The NodeDetails to be stored
+	*/
+	void setNodeDetails(NodeDetails details);
+
+	/**
+	* Basic deep comparison operator for the Node class. Should be overridden by inherited subclasses.
+	*/
+	bool operator==(const Node& right);
+
 private:
 	NodeDetails _details;
 	virtual void stub(); //To remove?

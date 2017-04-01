@@ -8,16 +8,21 @@
 #include "TypeParsing.h"
 
 #include "Node.h"
-#include "Expr.h"
 #include "Function.h"
 #include "Assignment.h"
+#include "Addition.h"
+#include "Subtraction.h"
+#include "Division.h"
+#include "Multiplication.h"
 #include "While.h"
 #include "For.h"
 #include "If.h"
 #include "Class.h"
 #include "Break.h"
 #include "Continue.h"
+
 #include "DataTypes\Int8.h"
+#include "DataTypes\IntLiteral.h"
 
 
 typedef std::list<TaggedLexeme> taglist;

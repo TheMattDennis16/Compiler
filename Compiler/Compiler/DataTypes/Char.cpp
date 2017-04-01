@@ -1,6 +1,6 @@
 #include "Char.h"
 
-Char::Char() : Type()
+Char::Char(Node::NodeDetails nodeDetails) : Type(nodeDetails)
 {
 	_id = TypeID::NEW_CHAR;
 	_size = 1;

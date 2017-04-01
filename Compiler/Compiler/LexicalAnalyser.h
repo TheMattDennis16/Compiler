@@ -41,8 +41,8 @@ private:
 	char _nextChar = ' ';
 	bool _isFinished = false;
 	bool _toSkip = false;
-	int _iLine = 1;
-	int _iPosition = 0;
+	unsigned _iLine = 1;
+	unsigned _iPosition = 0;
 
 	/**
 	* Advance the line position iterator of the source file. Reset the position of the character index on the new line.
