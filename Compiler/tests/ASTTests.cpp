@@ -1,12 +1,11 @@
 #include "TestingTools.h"
 #include "ASTTestsClass.h"
 
-#include <vector>
-#include <boost/test/unit_test.hpp>
-
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE ast_tests
 
+#include <vector>
+#include <boost/test/unit_test.hpp>
 /*
  * Isolate tag creation by doing it manually. No point relying on the LexicalAnalyser.
  */

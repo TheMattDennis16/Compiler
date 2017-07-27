@@ -5,8 +5,11 @@ output_file=output_file
 build: 
 	g++ -o compiler $(cxxflags) -I ./includes/ ./src/*.cpp main.cpp
 
-test:
+tests:
 	g++ -o test_runner -I /usr/local/include/ -I ./includes/ tests/*.cpp src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
+
+test:
+	g++ -o single_test_runner -I /usr/local/include/ -I ./includes/ $(file) src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
 
 asm:
 	g++ -o compiler $(cxxflags) -I ./includes/ ./src/*.cpp main.cpp
