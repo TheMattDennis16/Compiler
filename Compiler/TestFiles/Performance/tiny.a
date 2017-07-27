@@ -1,0 +1,6 @@
+//This is not a comment.
+int main(char a, char b, int c)
+{
+	print("Hello, World!");
+	return (int)a + (int)b + c;
+}
