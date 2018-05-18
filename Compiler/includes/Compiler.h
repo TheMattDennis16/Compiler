@@ -41,8 +41,8 @@ public:
 	~Compiler();
 
 	/**
-	* Returns the output of the Lexical Analyser. 
-	* @return An std::list of pairs. Each pair consists of a String and a TaggedLexeme.
+	* Returns the output of the Lexical Analyser.
+	* @return An std::vector of pairs. Each pair consists of a String and a TaggedLexeme.
 	*/
 	std::vector<TaggedLexeme> getLexerOutput();
 

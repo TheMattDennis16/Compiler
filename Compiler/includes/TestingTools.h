@@ -6,7 +6,7 @@
 namespace TestingTools
 {
 	/**
-	* Converts the std::list of TaggedLexemes into a string.
+	* Converts the std::vector of TaggedLexemes into a string.
 	*/
 	std::string lexToString(std::vector<TaggedLexeme> list);
 

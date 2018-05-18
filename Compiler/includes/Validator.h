@@ -21,6 +21,7 @@
 #include "Break.h"
 #include "Continue.h"
 
+#include "DataTypes/Bool.h"
 #include "DataTypes/Int8.h"
 #include "DataTypes/IntLiteral.h"
 
@@ -34,7 +35,7 @@ class Validator
 private:
 	int _nestingLevel;
 	taglist _tokens;
-	tagIt _it; 
+	tagIt _it;
 	RootNode _rootNode;
 	Class* _activeClass;
 	Block* _activeBlock;
@@ -42,7 +43,7 @@ private:
 
 protected:
 	/*
-	* Increments the iterator to load the next available TaggedLexeme. This updates the private _it Iterator for the tag std::list
+	* Increments the iterator to load the next available TaggedLexeme. This updates the private _it Iterator for the tag std::vector
 	*/
 	TaggedLexeme _getNext();
 
@@ -54,7 +55,7 @@ protected:
 	If* _validateIf();
 
 	/**
-	* Validate that the While statement follows expected syntax, and that it contains an Expression. 
+	* Validate that the While statement follows expected syntax, and that it contains an Expression.
 	* Defer validation of type to next phase.
 	* @return A pointer to a While node containing the Expression and a pointer to its new associated block.
 	*/
@@ -75,7 +76,7 @@ protected:
 
 	/**
 	* Parses the Lexeme stream to identify and construct Function Parameter objects for insertion into the Function class.
-	* @return An std::list of FunctionParameter objects.
+	* @return An std::vector of FunctionParameter objects.
 	*/
 	std::vector<FunctionParameter> _validateFunctionParameters();
 
@@ -136,7 +137,7 @@ public:
 
 	/**
 	* Constructor for Validator class.
-	* @param tags An std::list of TaggedLexeme's, containing the tag and line information gathered from parsing.
+	* @param tags An std::vector of TaggedLexeme's, containing the tag and line information gathered from parsing.
 	*/
 	Validator(taglist tags);
 
@@ -147,14 +148,14 @@ public:
 
 	/**
 	* Overload method which uses the specified taglist rather than any previously defined one.
-	* param tags An std::list of tags to build the AST from.
+	* param tags An std::vector of tags to build the AST from.
 	* return true if the tree was built successfully, false if it was not.
 	*/
 	bool buildTree(taglist tags);
 
 	/**
 	* Public method to allow tags to be added
-	* param tags an std::list of tags to be used later on should a buildTree method be called.
+	* param tags an std::vector of tags to be used later on should a buildTree method be called.
 	*/
 	void addTags(taglist tags);
 };

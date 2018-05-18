@@ -6,28 +6,28 @@
 #include "Block.h"
 
 #include <algorithm>
-#include <list>
+#include <vector>
 #include <string>
 
 class SymbolTable
 {
 private:
-	std::list<Symbol> _symbols;
+	std::vector<Symbol> _symbols;
 
 public:
 	/**
-	* Constructor for the SymbolTable class. 
+	* Constructor for the SymbolTable class.
 	*/
 	SymbolTable();
 
 	/**
-	* Destructor for the SymbolTable class. 
+	* Destructor for the SymbolTable class.
 	*/
 	~SymbolTable();
 
 	/**
-	* Checks whether or not the Symbol specified as a parameter is in the std::list of Symbols. Performs pointer comparisons where necessary.
-	* @param symbol A reference to the Symbol class instance to compare with the entries in the std::list.
+	* Checks whether or not the Symbol specified as a parameter is in the std::vector of Symbols. Performs pointer comparisons where necessary.
+	* @param symbol A reference to the Symbol class instance to compare with the entries in the std::vector.
 	* @return True if the Symbol is found, false if it is not.
 	*/
 	bool containsSymbol(Symbol& symbol);

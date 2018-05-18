@@ -51,7 +51,7 @@ private:
 	void _advanceLinePosition(bool& hasHitEnd);
 
 	/**
-	* Safe method for advancing the iterator across lines while updating the character indexing at the same time. 
+	* Safe method for advancing the iterator across lines while updating the character indexing at the same time.
 	* This has different functionality compared to _getNextChar();
 	* @return True if successfully advanced the position and line
 	*/
@@ -71,7 +71,7 @@ private:
 	bool getNextChar();
 
 	/**
-	* Adds the specified Token to the output std::list. Wraps it as a TaggedLexeme by including the line number before addition.
+	* Adds the specified Token to the output std::vector. Wraps it as a TaggedLexeme by including the line number before addition.
 	* @param token A reference to the specified Token class.
 	*/
 	void _addToOutput(const Token& token);
@@ -83,16 +83,16 @@ public:
 	LexicalAnalyser();
 
 	/**
-	* Runs the tokenization process. Parses the specified std::list parameter as lines of characters.
+	* Runs the tokenization process. Parses the specified std::vector parameter as lines of characters.
 	* Characters are formed into groups based the syntax rules. A group of characters has the type identified
 	* and then stored as a Token.
-	* @param lines An std::list where the subtype is a String. Each of these strings represents a line of the original source code.
+	* @param lines An std::vector where the subtype is a String. Each of these strings represents a line of the original source code.
 	*/
 	void tokenize(std::vector<std::string>& lines);
 
-	/**
+    /**
 	* Returns the current output list of tagged Lexeme's as a pair with the String being the Token's representation.
-	* @return An std::list of <string, TaggedLexeme> pairs.
+	* @return An std::vector of <string, TaggedLexeme> pairs.
 	*/
 	std::vector<TaggedLexeme> getOutput();
 };

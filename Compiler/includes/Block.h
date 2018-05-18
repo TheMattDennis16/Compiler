@@ -3,14 +3,14 @@
 
 #include "Node.h"
 
-#include <list>
+#include <vector>
 
-typedef std::list<Node*>::iterator iterator;
+typedef std::vector<Node*>::iterator iterator;
 
 class Block : public Node
 {
 private:
-	std::list<Node*> _nodes;
+	std::vector<Node*> _nodes;
 
 public:
 	bool isClosed;
@@ -23,19 +23,19 @@ public:
 
 	/**
 	* Returns the beginning iterator of the nodes in the block.
-	* @return Returns a begin() iterator for an std::list
+	* @return Returns a begin() iterator for an std::vector
 	*/
 	iterator getIterator();
 
 	/**
 	* Returns the end iterator of the nodes in the block.
-	* @return Returns the end() iterator for an std::list
+	* @return Returns the end() iterator for an std::vector
 	*/
 	iterator getIteratorEnd();
 
 	/**
 	* Adds a node to the current list of Blocks. Used to store any child code contained within this scope.
-	* @param node The node to be added to the std::list of Nodes.
+	* @param node The node to be added to the std::vector of Nodes.
 	*/
 	void addNode(Node* node);
 

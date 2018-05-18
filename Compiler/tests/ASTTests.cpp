@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_CASE(Assignment_Operator)
 {
 	/*
 	 * test the _validateExpr method, should return a tree of:
-	 * [TYPE] [IDENTIFIER] [OP] [EXPR] ;
+	 * [NODE] [OP] [EXPR] ;
 	 * which would be a tree of:
 	 *                     =
 	 *                    / \
@@ -36,7 +36,6 @@ BOOST_AUTO_TEST_CASE(Assignment_Operator)
 		);
 
 	ASTTests testClass;
-	printf("qwe");
 	Node* resultNode = testClass.validateTYPE(lexemes);
 	printf("qwe");
 	Assignment result = dynamic_cast<Assignment&>(*resultNode);
@@ -59,7 +58,7 @@ BOOST_AUTO_TEST_CASE(Addition_Operator)
 		Node::NodeDetails(nullptr, 0, 0));
 
 	ASTTests testClass;
-	Node* resultNode = testClass.validateTYPE(lexemes);
+	Node* resultNode = testClass.validateEXPR(lexemes);
 	Addition result = dynamic_cast<Addition&>(*resultNode);
 	BOOST_REQUIRE_EQUAL(result == expected, true);
 	printf("\n\n");
@@ -503,6 +502,162 @@ BOOST_AUTO_TEST_CASE(Order_Of_Operations_Four)
 	Node* resultNode = testClass.validateEXPR(lexemes);
 	Assignment result = dynamic_cast<Assignment&>(*resultNode);
 	BOOST_REQUIRE_EQUAL(result == expected, true);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Simple_If_With_Bool_Empty_Block)
+{
+    std::vector<TaggedLexeme> lexemes = {
+        TaggedLexeme(Token(TokenTypes::KEYWORD, "if"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "("), 1),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "true"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ")"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "{"), 2),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "}"), 3)
+    };
+
+    If expected(
+        new Block(Node::NodeDetails(nullptr, 0, 1)),
+        std::vector<Node*>(),
+        new Int8(Node::NodeDetails(nullptr, 0, 1)),
+        Node::NodeDetails(nullptr, 0, 1)
+    );
+
+    ASTTests testClass;
+    Node* resultNode = testClass.validateIF(lexemes);
+    If result = dynamic_cast<If&>(*resultNode);
+    BOOST_REQUIRE_EQUAL(result == expected, true);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Simple_If_With_Bool_With_Block)
+{
+    std::vector<TaggedLexeme> lexemes = {
+        TaggedLexeme(Token(TokenTypes::KEYWORD, "if"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "("), 1),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "true"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ")"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "{"), 2),
+        TaggedLexeme(Token(TokenTypes::TYPE, "int8"), 3),
+        TaggedLexeme(Token(TokenTypes::IDENTIFIER, "a"), 3),
+        TaggedLexeme(Token(TokenTypes::OPERATOR, "="), 3),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "1"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ";"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "}"), 4)
+    };
+
+    If* expected = nullptr;
+    Block* block = new Block(Node::NodeDetails(expected, 0, 3));
+
+	Assignment* assignNode = new Assignment (
+		new Int8(Node::NodeDetails(block, 0, 3)),
+		new IntLiteral(1),
+		Node::NodeDetails(block, TokenTypes::OPERATOR, 3)
+    );
+    block->addNode(assignNode);
+
+    expected = new If(
+        block,
+        std::vector<Node*>(),
+        new Bool(Node::NodeDetails(nullptr, 0, 1)),
+        Node::NodeDetails(nullptr, 0, 1)
+    );
+
+    ASTTests testClass;
+    Node* resultNode = testClass.validateIF(lexemes);
+    If result = dynamic_cast<If&>(*resultNode);
+    BOOST_REQUIRE_EQUAL(result == *expected, true);
+	printf("\n\n");
+}
+
+BOOST_AUTO_TEST_CASE(Function_Call_If_With_Bool_With_Block)
+{
+    std::vector<TaggedLexeme> lexemes = {
+        TaggedLexeme(Token(TokenTypes::KEYWORD, "if"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "("), 1),
+        TaggedLexeme(Token(TokenTypes::IDENTIFIER, "isTrue"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "("), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ")"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ")"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "{"), 2),
+        TaggedLexeme(Token(TokenTypes::TYPE, "int8"), 3),
+        TaggedLexeme(Token(TokenTypes::IDENTIFIER, "a"), 3),
+        TaggedLexeme(Token(TokenTypes::OPERATOR, "="), 3),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "1"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ";"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "}"), 4)
+    };
+
+    If* expected = nullptr;
+    Block* block = new Block(Node::NodeDetails(expected, 0, 3));
+
+	Assignment* assignNode = new Assignment (
+		new Int8(Node::NodeDetails(block, 0, 3)),
+		new IntLiteral(1),
+		Node::NodeDetails(block, TokenTypes::OPERATOR, 3)
+    );
+    block->addNode(assignNode);
+
+    expected = new If(
+        block,
+        std::vector<Node*>(),
+        new FunctionCall("isTrue",
+                std::vector<FunctionParameterValue>{},
+                new Bool(Node::NodeDetails(nullptr, 0, 1)),
+                Node::NodeDetails(nullptr, 0, 1)),
+        Node::NodeDetails(nullptr, 0, 1)
+    );
+
+    ASTTests testClass;
+    Node* resultNode = testClass.validateIF(lexemes);
+    If result = dynamic_cast<If&>(*resultNode);
+    BOOST_REQUIRE_EQUAL(result == *expected, true);
+	printf("\n\n");
+}
+
+
+BOOST_AUTO_TEST_CASE(Function_Call_If_With_Bool_With_Block)
+{
+    std::vector<TaggedLexeme> lexemes = {
+        TaggedLexeme(Token(TokenTypes::KEYWORD, "if"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "("), 1),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "true"), 1),
+        TaggedLexeme(Token(TokenTypes::OPERATOR, "=="), 1),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "true"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ")"), 1),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "{"), 2),
+        TaggedLexeme(Token(TokenTypes::TYPE, "int8"), 3),
+        TaggedLexeme(Token(TokenTypes::IDENTIFIER, "a"), 3),
+        TaggedLexeme(Token(TokenTypes::OPERATOR, "="), 3),
+        TaggedLexeme(Token(TokenTypes::VAR_VALUE, "1"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, ";"), 3),
+        TaggedLexeme(Token(TokenTypes::SYMBOL, "}"), 4)
+    };
+
+    If* expected = nullptr;
+    Block* block = new Block(Node::NodeDetails(expected, 0, 3));
+
+	Assignment* assignNode = new Assignment (
+		new Int8(Node::NodeDetails(block, 0, 3)),
+		new IntLiteral(1),
+		Node::NodeDetails(block, TokenTypes::OPERATOR, 3)
+    );
+    block->addNode(assignNode);
+
+    expected = new If(
+        block,
+        std::vector<Node*>(),
+        new FunctionCall("isTrue",
+                std::vector<FunctionParameterValue>{},
+                new Bool(Node::NodeDetails(nullptr, 0, 1)),
+                Node::NodeDetails(nullptr, 0, 1)),
+        Node::NodeDetails(nullptr, 0, 1)
+    );
+
+    ASTTests testClass;
+    Node* resultNode = testClass.validateIF(lexemes);
+    If result = dynamic_cast<If&>(*resultNode);
+    BOOST_REQUIRE_EQUAL(result == *expected, true);
 	printf("\n\n");
 }
 

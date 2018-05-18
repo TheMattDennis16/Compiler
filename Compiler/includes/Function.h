@@ -34,7 +34,7 @@ public:
 	Type* _type;
 
 	/**
-	* The constructor for the FunctionParameterValue class. 
+	* The constructor for the FunctionParameterValue class.
 	* @param type Provides the type information for the value.
 	*/
 	FunctionParameterValue(Type* type)
@@ -53,13 +53,13 @@ private:
 public:
 	/**
 	* Constructor for the Function node class. Represents a function as the components which it represents.
-	* @param params   A reference to an std::list of type FunctionParameter. 
+	* @param params   A reference to an std::vector of type FunctionParameter.
 	*                 This therefore stores the FunctionParameter objects associated with this function signature.
 	* @param name     The string representation of the identifier for this function signature.
 	* @param details  Allows the Node details to be stored for extra information about this object.
 	*/
 	Function(
-		std::vector<FunctionParameter> params, 
+		std::vector<FunctionParameter> params,
 		std::string name,
 		NodeDetails details
 		);
@@ -83,14 +83,14 @@ public:
 	std::string getName();
 
 	/**
-	* Adds the reference to the specified parameter to the std::list of known parameters.
+	* Adds the reference to the specified parameter to the std::vector of known parameters.
 	* @param param The reference to the new FunctionParameter object to be stored.
 	*/
 	void addParameter(FunctionParameter param);
 
 	/**
-	* Gets a copy of the std::list of stored parameters. Const qualified.
-	* @return Returns the std::list of FunctionParameter objects.
+	* Gets a copy of the std::vector of stored parameters. Const qualified.
+	* @return Returns the std::vector of FunctionParameter objects.
 	*/
 	std::vector<FunctionParameter> getParameters() const;
 

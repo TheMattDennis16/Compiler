@@ -19,8 +19,8 @@ private:
 
 	/**
 	* Find and return all Function objects which match the specified String.
-	* @param name The String instance representing the name to be searched for in the std::list of available Functions.
-	* @return Returns an std::list of pointers to Function objects.
+	* @param name The String instance representing the name to be searched for in the std::vector of available Functions.
+	* @return Returns a std::vector of pointers to Function objects.
 	*/
 	std::vector<Function*> _findAllFunctionNameMatches(std::string name);
 
@@ -49,15 +49,15 @@ public:
 	void setName(std::string name);
 
 	/**
-	* Checks whether or not the std::list currently contains a matching Function signature. Shallow comparison comparing the pointer only.
-	* @param function A pointer to the function signature to be checked against the std::list
+	* Checks whether or not the std::vector currently contains a matching Function signature. Shallow comparison comparing the pointer only.
+	* @param function A pointer to the function signature to be checked against the std::vector
 	* @return true if a match is found, false if one is not.
 	*/
 	bool containsFunctionSignature(Function* function);
 
 	/**
-	* Finds all function signatures in the current Class scope which match the specified fName String. 
-	* Iterates over these and does a check of all parameters to ensure the types match. 
+	* Finds all function signatures in the current Class scope which match the specified fName String.
+	* Iterates over these and does a check of all parameters to ensure the types match.
 	* @param fName  The function name to find all parameter sets for.
 	* @param params The value types entered which are used to compare against the expected values.
 	* @return True if the funnction parameters match a result found by the function name specified.
@@ -68,14 +68,14 @@ public:
 	/**
 	* Method to call a specified function name with the parameters given.
 	* @param fName  Function name to call.
-	* @param params An std::list of FunctionParameterValue objects.
+	* @param params An std::vector list of FunctionParameterValue objects.
 	* @return A FunctionCall object to be included in the tree.
 	*/
 	FunctionCall callFunction(std::string fName, std::vector<FunctionParameterValue> params);
 
 	/**
 	* Adds a pointer to a Function instance to the list of stored Functions.
-	* @param function A pointer to the Function instance to add to the std::list collection.
+	* @param function A pointer to the Function instance to add to the std::vector collection.
 	*/
 	void addFunction(Function* function);
 
@@ -89,7 +89,7 @@ public:
 	/**
 	* Exposes the SymbolTable interface. Adds the specified function parameter to the SymbolTable class.
 	* DOES NOT CHECK FOR DUPLICATES BEFORE ADDITION.
-	* @param symbol A reference to the Symbol to add. 
+	* @param symbol A reference to the Symbol to add.
 	*/
 	void addToSymbolTable(Symbol& symbol);
 };

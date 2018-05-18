@@ -24,7 +24,7 @@ TokenCollection::TokenCollection()
 
 	_collection.insert({ std::string("true"),   Token(TokenTypes::VAR_VALUE, "true") });
 	_collection.insert({ std::string("false"),  Token(TokenTypes::VAR_VALUE, "false") });
-	
+
 	//Basic operators (no modulo)
 	_collection.insert({ std::string("++"), Token(TokenTypes::OPERATOR, "++") });//
 	_collection.insert({ std::string("--"), Token(TokenTypes::OPERATOR, "--") });//

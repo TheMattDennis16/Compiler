@@ -8,6 +8,7 @@ Validator::Validator()
 Validator::Validator(taglist tags) : Validator()
 {
 	_tokens = tags;
+    _it = _tokens.begin();
 }
 
 TaggedLexeme Validator::_getNext()
@@ -26,7 +27,7 @@ Node* Validator::_validateOperator(std::vector<TaggedLexeme> stack)
 	return nullptr;
 }
 
-Node* Validator::_validateType() 
+Node* Validator::_validateType()
 {
 	// Function definition
 	// [TYPE/CLASS] [IDENTIFIER] ( [TYPE_IDENTIFIER_PAIRS] ) {
@@ -43,21 +44,18 @@ Node* Validator::_validateType()
 	std::vector<TaggedLexeme> stack = { current };
 	Class* isClass = nullptr;
 	Type* isType = nullptr;
-	// If neither a known type OR a user defined class throw error for unknown type.
-	if (current.taggedWord.tokenType != TokenTypes::TYPE)
+	// If it isn't a TYPE then it's a class. We may not know the exact class yet. Verify later.
+    if (current.taggedWord.tokenType != TokenTypes::TYPE)
 	{
-		isClass = _rootNode.getClass(current.taggedWord.tokenValue);
-		if (isClass == nullptr)
-		{
-			// Is neither type nor class. Throw error.
-			UnexpectedToken(current.line, __FILE__, current.taggedWord.tokenValue);
-		}
+		isClass = new Class(current.taggedWord.tokenValue,
+            Node::NodeDetails(nullptr, current.taggedWord.tokenType, current.line));
 	}
 	else
 	{
 		isType = TypeParsing::getType(current.taggedWord.tokenValue, Node::NodeDetails(nullptr,0,0));
 	}
-	
+
+
 	current = _getNext();
 	stack.push_back(current);
 	if (current.taggedWord.tokenType != TokenTypes::IDENTIFIER)
@@ -65,8 +63,8 @@ Node* Validator::_validateType()
 		// Not an identifier - must be invalid name.
 		NotValidWord(current.line, __FILE__, current.taggedWord.tokenValue);
 	}
+    std::string identifier = current.taggedWord.tokenValue;
 
-	//Check identifier isn't already in use.
 	Type* toUse = nullptr;
 	if (isType != nullptr)
 	{
@@ -83,12 +81,17 @@ Node* Validator::_validateType()
 		UnexpectedToken(current.line, __FILE__, current.taggedWord.tokenValue);
 	}
 
+    printf("printing\n");
+    printf(current.taggedWord.tokenValue.c_str());
 	current = _getNext();
 	stack.push_back(current);
-	//	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue)))
+    printf(current.taggedWord.tokenValue.c_str());
 	if (current.taggedWord.tokenType == TokenTypes::SYMBOL)
 	{
+        printf("is symbol\n");
 		current = _getNext();
+	    stack.push_back(current);
+
 
 		// Must be one of top three cases
 		if (current.taggedWord.tokenValue == "(")
@@ -100,9 +103,9 @@ Node* Validator::_validateType()
 				if ((current = _getNext()).taggedWord.tokenValue == ";")
 				{
 					// [CLASS] [IDENTIFIER] ( [EXPR] ) ; with no EXPR paramaters.
-					
+
 					return new Node(Node::NodeDetails(nullptr, 0, 0));
-				} 
+				}
 				else
 				{
 					UnexpectedToken(current.line, __FILE__, current.taggedWord.tokenValue);
@@ -121,7 +124,7 @@ Node* Validator::_validateType()
 				//Must be second case: [TYPE/CLASS] [IDENTIFIER] ( [EXPR] ) ;
 				Node* expr = _validateExpression();
 				current = _getNext();
-				if (current.taggedWord.tokenValue == ")") 
+				if (current.taggedWord.tokenValue == ")")
 				{
 					current = _getNext();
 					if (current.taggedWord.tokenValue == ";")
@@ -131,7 +134,7 @@ Node* Validator::_validateType()
 						return new Node(Node::NodeDetails(nullptr, 0, 0));
 					}
 				}
-				else 
+				else
 				{
 					//Error, unexpected symbol
 				}
@@ -139,7 +142,7 @@ Node* Validator::_validateType()
 
 			// Next part must be a ) symbol.
 			current = _getNext();
-			if (current.taggedWord.tokenValue == "{") 
+			if (current.taggedWord.tokenValue == "{")
 			{
 
 			}
@@ -166,9 +169,10 @@ Node* Validator::_validateType()
 	else if (current.taggedWord.tokenType == TokenTypes::OPERATOR)
 	{
 		// Must be Rule 4 (Assignment OP), next must evaluate to valid expression.
+        printf("op called\n");
 		Node* rightOperand = _validateExpression();
 		Node* newNode = new Assignment(toUse, rightOperand, Node::NodeDetails(_activeBlock, current.taggedWord.tokenType, current.line));
-		_activeBlock->addNode(newNode);		
+		_activeBlock->addNode(newNode);
 	}
 	else
 	{
@@ -207,7 +211,7 @@ bool Validator::_isInLoop()
 }
 
 // FOR ( EXPR ; EXPR ; EXPR ) {
-For* Validator::_validateFor() 
+For* Validator::_validateFor()
 {
 	// Only allow iterative controls.
 	// Must follow syntax:
@@ -217,25 +221,21 @@ For* Validator::_validateFor()
 	// 2) boolean checkable expression
 	// 3) identifier iteration
 	TaggedLexeme current = (*_it);
-
-
-
-
 	return nullptr;
 }
 
 // WHILE ( BOOL_EXPR ) {
-While* Validator::_validateWhile() 
+While* Validator::_validateWhile()
 {
 	TaggedLexeme current = (*_it);
-	return new While(nullptr, nullptr, Node::NodeDetails(nullptr, 0, 0));
+	return nullptr;
 }
 
-// IF ( BOOL_EXPR ) { 
-If* Validator::_validateIf() 
+// if ( bool_expr ) {
+If* Validator::_validateIf()
 {
 	TaggedLexeme current = (*_it);
-	return new If(nullptr, std::vector<Node*>(), nullptr, Node::NodeDetails(nullptr, 0, 0));
+	return nullptr;
 }
 
 Node* Validator::_validateStatement()
@@ -246,11 +246,11 @@ Node* Validator::_validateStatement()
 	{
 		toReturn = _validateIf();
 	}
-	else if (tag.taggedWord.tokenValue == "for") 
+	else if (tag.taggedWord.tokenValue == "for")
 	{
 		toReturn = _validateFor();
 	}
-	else if (tag.taggedWord.tokenValue == "while") 
+	else if (tag.taggedWord.tokenValue == "while")
 	{
 		toReturn = _validateWhile();
 	}
@@ -273,14 +273,14 @@ Node* Validator::_validateStatement()
 	return toReturn;
 }
 
-// class [IDENTIFER] {
+// class [identifer] {
 Class* Validator::_validateClass()
 {
 	auto tag = _getNext();
 	if (_nestingLevel > 0)
 		ImbalancedBraces(tag.line, __FILE__);
 
-	//_activeClass = new Class(tag.taggedWord.tokenValue);
+	//_activeclass = new class(tag.taggedWord.tokenValue);
 	if (tag.taggedWord.tokenType != TokenTypes::IDENTIFIER)
 		NotValidWord(tag.line, __FILE__, tag.taggedWord.tokenValue);
 	tag = _getNext();
@@ -296,41 +296,33 @@ Class* Validator::_validateClass()
 	return nullptr;
 }
 
-// Should evaluate to:
-// [IDENT] [OP] [VALUE]
-// where [VALUE] can be another nested Expression.
+// should evaluate to:
+// [ident] [op] [value]
+// where [value] can be another nested expression.
 // e.g.
-// [IDENT] [OP] [IDENT] [OP] [IDENT] [OP] [VALUE] ;
+// [ident] [op] [ident] [op] [ident] [op] [value] ;
 // a        =      b     +      c     *    2      ;
 // a        =   (  b     +   (  c     *    2    ));
-//                     
-//                    [OP]
-//                   /    \
-//            [IDENT]      [OP]
-//                        /    \
-//                 [IDENT]      [OP]
-//                             /    \
-//                      [IDENT]      [VALUE]
 //
-// Except in case of function call. Which must be:
-// VARIABLE_IDENT . FUNCTION_NAME( FUNCTION_PARAMS_EXPR ) ;
-// OR
-// FUNCTION_NAME ( FUNCTION_PARAMS_EXPR ) ;
+//                    [op]
+//                   /    \
+//            [ident]      [op]
+//                        /    \
+//                 [ident]      [op]
+//                             /    \
+//                      [ident]      [value]
+//
+// except in case of function call. which must be:
+// variable_ident . function_name( function_params_expr ) ;
+// or
+// function_name ( function_params_expr ) ;
 Node* Validator::_validateExpression()
 {
 	TaggedLexeme current = (*_it);
-	if (Class* c = dynamic_cast<Class*>(TypeParsing::getType(current.taggedWord.tokenValue, Node::NodeDetails(nullptr, 0, 0))))
-	{
-		return _validateType();
-	}
-	
-	std::vector<TaggedLexeme> stack{ current, current = _getNext() };
-	if (current.taggedWord.tokenValue == "(")
-	{
-		//must be function call.
-		
-		//if(_activeClass->containsFunctionSignature)
-	}
+	if (current.taggedWord.tokenType == TokenTypes::OPERATOR)
+    {
+
+    }
 
 	return nullptr;
 }
@@ -344,7 +336,7 @@ bool Validator::_validateSymbol()
 		{
 			// _activeBlock needs to have the parent block assigned to it.
 			// E.G
-			// 
+			//
 			// fn() {
 			//   int a = 2 + 1;
 			//   if(a == 3) {
@@ -396,13 +388,13 @@ bool Validator::_validateSymbol()
 
 bool Validator::_validateSyntax()
 {
-	do 
+	do
 	{
 		TaggedLexeme current = (*_it);
 		if (current.taggedWord.tokenValue == "class")
 		{
 			Class* newClass = _validateClass();
-			if (_activeClass == nullptr) 
+			if (_activeClass == nullptr)
 			{
 				_activeClass = newClass;
 			}
@@ -444,6 +436,7 @@ bool Validator::_validateSyntax()
 void Validator::addTags(taglist tags)
 {
 	_tokens = tags;
+    _it = _tokens.begin();
 }
 
 void Validator::_resetPrivateData()
@@ -459,7 +452,7 @@ void Validator::_resetPrivateData()
 
 bool Validator::buildTree()
 {
-	if (_tokens.size() > 0) 
+	if (_tokens.size() > 0)
 	{
 		_validateSyntax();
 	}

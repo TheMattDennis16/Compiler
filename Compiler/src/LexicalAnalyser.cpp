@@ -14,7 +14,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 	_nextChar = (*_lines.begin()).at(0);
 	bool isTokenised = false;
 	while (!_isFinished)
-	{	
+	{
 		if(!_toSkip) getNextChar();
 		if (_previousChar == '\n' || _previousChar == '\r')
 		{
@@ -24,7 +24,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 			}
 			continue;
 		}
-		if (_previousChar == ' ' || _previousChar == '\t') 
+		if (_previousChar == ' ' || _previousChar == '\t')
 			continue;
 
 		//Operator symbol checking
@@ -36,7 +36,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 		else if (_previousChar == '!')
 		{
 			if (_nextChar == '=') { _addToOutput(Token(TokenTypes::OPERATOR, "!=")); getNextChar(); }
-			else _addToOutput(Token(TokenTypes::OPERATOR, "!")); 
+			else _addToOutput(Token(TokenTypes::OPERATOR, "!"));
 		}
 		else if (_previousChar == '/')
 		{
@@ -124,7 +124,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 				_addToOutput(Token(TokenTypes::SYMBOL, "\""));
 				isStringLiteralOpen = true;
 			}
-			else 
+			else
 			{
 				_addToOutput(Token(TokenTypes::SYMBOL, "\'"));
 				isCharOpen = true;
@@ -133,7 +133,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 			while (!isLocFinished)
 			{
 				//Parse out string literal open/closers.
-				if (_nextChar == '\"')
+				if (_nextChar == '"')
 				{
 					if (!isCharOpen)
 					{
@@ -147,7 +147,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 					}
 					else
 					{
-						word += '\"';
+						word += '"';
 						getNextChar();
 					}
 				}
@@ -158,7 +158,7 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 						if (isCharOpen)
 						{
 							_addToOutput(Token(TokenTypes::VAR_VALUE, word));
-							_addToOutput(Token(TokenTypes::SYMBOL, "\'"));
+							_addToOutput(Token(TokenTypes::SYMBOL, "'"));
 							isLocFinished = true;
 							getNextChar();
 						}
@@ -176,6 +176,14 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 					{
 						word += _nextChar;
 						isLocFinished = !getNextChar();
+
+                        //Only called in the case of an unmatched string/char.
+                        // e.g.   char[] a = "unmatched
+                        //        char   a = 'a
+                        if (isLocFinished)
+                        {
+							_addToOutput(Token(TokenTypes::VAR_VALUE, word));
+                        }
 					}
 					else
 					{
@@ -195,8 +203,8 @@ void LexicalAnalyser::tokenize(std::vector<std::string>& list)
 								_addToOutput(Token(TokenTypes::IDENTIFIER, word));
 							}
 
-							
-							//Check to see if our _nextChar is actually a real token, if it isnt then its whitespace and who cares
+
+							//Check to see if our _nextChar is actually a real token, if it isnt then its whitespace.
 							if (charSearch.tokenValue == ";")
 							{
 								_addToOutput(charSearch); getNextChar();

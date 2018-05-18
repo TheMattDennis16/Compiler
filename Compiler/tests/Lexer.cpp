@@ -27,7 +27,6 @@ BOOST_AUTO_TEST_CASE(Single_Line_Variable)
 	Compiler compiler;
 	compiler.parseFile("TestFiles/single_line_variable.a");
 	auto result = compiler.getLexerOutput();
-	//std::list<std::pair<std::string, TaggedLexeme>>
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
 	BOOST_REQUIRE_EQUAL(sresult, "int8,a,=,1,;");
@@ -151,7 +150,7 @@ BOOST_AUTO_TEST_CASE(String_Literals_No_End)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	sresult = sresult.substr(0, sresult.size() - 1);
-	BOOST_REQUIRE_EQUAL(sresult, "char,[,],a,=,\",unmatched,\"");
+	BOOST_REQUIRE_EQUAL(sresult, "char,[,],a,=,\",unmatched");
 	printf("\n\n");
 }
 
@@ -205,6 +204,10 @@ BOOST_AUTO_TEST_CASE(Class)
 	auto result = compiler.getLexerOutput();
 	std::string sresult = TestingTools::lexToString(result);
 	std::string expected = "class,Test,{,}";
+
+    printf("\n");
+    printf(sresult.c_str());
+    printf("\n");
 	sresult = sresult.substr(0, sresult.size() - 1);
 	BOOST_REQUIRE_EQUAL(sresult, expected);
 	printf("\n\n");
