@@ -71,7 +71,7 @@ Token TokenCollection::isToken(std::string strToken)
 
 bool TokenCollection::isStringBreakingChar(char tokenChar)
 {
-	if (isToken(std::string("") + tokenChar).tokenType != TokenTypes::NOT_TOKEN || tokenChar == ' ')
+	if (isToken(std::string("") + tokenChar).tokenType != TokenTypes::NOT_TOKEN || tokenChar == ' ' || tokenChar == '\n' || tokenChar == '\r')
 		return true;
 	return false;
 }

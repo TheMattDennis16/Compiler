@@ -1,18 +1,18 @@
-'cxxflags=-Wall std=c++17'
+'cxxflags=-Wall -std=c++17'
 input_file=test_input.a
 output_file=output_file
 
 build: 
-	g++ -o compiler $(cxxflags) -I ./includes/ ./src/*.cpp main.cpp
+	g++ -o compiler $(cxxflags) -I ./includes/ ./src/*.cpp main.cpp -g
 
 tests:
-	g++ -o test_runner std=c++17 -I /usr/local/include/ -I ./includes/ tests/*.cpp src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
+	g++ -o test_runner -std=c++17 -I /usr/local/include/ -I ./includes/ tests/*.cpp src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
 
 test:
-	g++ -o single_test_runner -std=c++17 I /usr/local/include/ -I ./includes/ $(file) src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
+	g++ -o single_test_runner -std=c++17 -I /usr/local/include/ -I ./includes/ $(file) src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework -g
 
 performance:
-	g++ -o single_test_runner -std=c++17 I /usr/local/include/ -I ./includes/ $(file) src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
+	g++ -o single_test_runner -std=c++17 -I /usr/local/include/ -I ./includes/ $(file) src/*.cpp -L~/boost/stage/lib -lboost_unit_test_framework
 
 asm:
 	g++ -o compiler $(cxxflags) -I ./includes/ ./src/*.cpp main.cpp
